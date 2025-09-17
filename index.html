@@ -1,98 +1,189 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>منوی کافه</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
-      font-family: "Tahoma", sans-serif;
+      font-family: "Vazir", sans-serif;
       margin: 0;
       padding: 0;
-      background: #fdfaf6;
+      background: #f5f5f5;
       color: #333;
-      direction: rtl;
+      transition: background 0.3s, color 0.3s;
     }
 
     header {
-      background: linear-gradient(135deg, #3e2723, #6d4c41);
+      background: #6a1b9a;
       color: white;
+      padding: 15px;
       text-align: center;
-      padding: 25px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-size: 1.4rem;
+      font-weight: bold;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-      letter-spacing: 1px;
+    .dark-mode {
+      background: #121212;
+      color: #eee;
     }
 
     .menu-section {
-      padding: 40px 20px;
-      max-width: 1100px;
-      margin: auto;
+      padding: 20px;
     }
 
-    .menu-section h2 {
-      border-bottom: 3px solid #6d4c41;
-      display: inline-block;
-      padding-bottom: 8px;
-      margin-bottom: 25px;
-      font-size: 22px;
-      color: #3e2723;
+    h2 {
+      color: #6a1b9a;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .dark-mode h2 {
+      color: #bb86fc;
+      border-color: #333;
     }
 
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
     }
 
     .menu-item {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s, background 0.3s, color 0.3s;
       opacity: 0;
       transform: translateY(30px);
       animation: fadeInUp 0.7s ease forwards;
     }
 
-    .menu-item img {
-      width: 100%;
-      height: auto;
-      max-height: 180px;
-      object-fit: cover;
-      border-bottom: 1px solid #eee;
-    }
-
-    .menu-item div {
-      padding: 15px;
-    }
-
-    .menu-item h3 {
-      margin: 0 0 8px;
-      font-size: 18px;
-      color: #3e2723;
-    }
-
-    .menu-item p {
-      font-size: 14px;
-      color: #666;
-      margin: 0 0 10px;
-    }
-
-    .menu-item span {
-      font-weight: bold;
-      color: #4caf50;
+    .dark-mode .menu-item {
+      background: #1e1e1e;
+      color: #eee;
     }
 
     .menu-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transform: translateY(-5px);
+    }
+
+    h3 {
+      font-size: 1rem;
+      margin: 8px 0;
+    }
+
+    .price {
+      color: #6a1b9a;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .dark-mode .price {
+      color: #bb86fc;
+    }
+
+    .buy-btn {
+      background: #6a1b9a;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .buy-btn:hover {
+      background: #4a148c;
+    }
+
+    footer {
+      background: #6a1b9a;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.9rem;
+    }
+
+    .dark-mode footer {
+      background: #1e1e1e;
+    }
+
+    .dark-toggle, .cart-toggle {
+      position: fixed;
+      bottom: 20px;
+      background: #6a1b9a;
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .dark-toggle { left: 20px; }
+    .cart-toggle { right: 20px; }
+
+    .dark-toggle:hover, .cart-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    /* سبد خرید */
+    .cart-panel {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 300px;
+      max-height: 400px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      padding: 15px;
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+
+    .dark-mode .cart-panel {
+      background: #1e1e1e;
+      color: #eee;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0;
+      font-size: 0.9rem;
+    }
+
+    .cart-item button {
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .cart-total {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+      color: #6a1b9a;
+    }
+
+    .dark-mode .cart-total {
+      color: #bb86fc;
     }
 
     @keyframes fadeInUp {
@@ -102,103 +193,437 @@
       }
     }
 
-    footer {
-      background: #3e2723;
-      color: white;
-      text-align: center;
-      padding: 25px 15px;
-      margin-top: 40px;
-    }
-
-    .footer-contact {
-      margin: 10px 0;
-    }
-
-    .footer-contact a {
-      color: #ffc107;
-      text-decoration: none;
-      margin: 0 10px;
-      font-size: 16px;
-    }
-
-    .footer-contact a:hover {
-      text-decoration: underline;
-    }
-
-    .qrcode {
-      margin: 20px auto;
-      text-align: center;
+    @media (max-width: 768px) {
+      .menu-grid { grid-template-columns: 1fr; }
+      .menu-item { padding: 12px; }
+      footer { font-size: 0.8rem; position: sticky; bottom: 0; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>منوی کافه متین</h1>
-  </header>
+  <header>منوی کافه TarhSara</header>
 
+  <!-- 🍵 نوشیدنی‌های گرم -->
   <section class="menu-section">
     <h2>نوشیدنی‌های گرم</h2>
     <div class="menu-grid">
-      <div class="menu-item">
-        <img src="https://source.unsplash.com/400x300/?coffee" alt="کاپوچینو">
-        <div>
-          <h3>کاپوچینو</h3>
-          <p>قهوه اسپرسو با شیر داغ و کف شیر</p>
-          <span>80,000 تومان</span>
-        </div>
-      </div>
-      <div class="menu-item">
-        <img src="https://source.unsplash.com/400x300/?latte" alt="لاته">
-        <div>
-          <h3>لاته</h3>
-          <p>ترکیب اسپرسو با شیر بخار داده شده</p>
-          <span>75,000 تومان</span>
-        </div>
-      </div>
+      <div class="menu-item"><h3>اسپرسو</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>دوپیو</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>کند برو</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>آیس لاته</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
     </div>
   </section>
 
+  <!-- 🧊 نوشیدنی‌های سرد -->
   <section class="menu-section">
     <h2>نوشیدنی‌های سرد</h2>
     <div class="menu-grid">
-      <div class="menu-item">
-        <img src="https://source.unsplash.com/400x300/?iced-coffee" alt="آیس کافی">
-        <div>
-          <h3>آیس کافی</h3>
-          <p>قهوه خنک با یخ و شیرین‌کننده طبیعی</p>
-          <span>90,000 تومان</span>
-        </div>
-      </div>
-      <div class="menu-item">
-        <img src="https://source.unsplash.com/400x300/?milkshake" alt="شیک شکلات">
-        <div>
-          <h3>شیک شکلات</h3>
-          <p>شیر مخلوط با بستنی و شکلات</p>
-          <span>85,000 تومان</span>
-        </div>
-      </div>
+      <div class="menu-item"><h3>موهیتو</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>آیس تی</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>دتاکس واتر</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
     </div>
   </section>
 
-  <footer>
-    <h2>کافه متین</h2>
-    <div class="footer-contact">
-      <a href="tel:09152668451"><i class="fas fa-phone"></i> تماس: 09152668451</a>
-      <a href="https://instagram.com/yourcafe" target="_blank"><i class="fab fa-instagram"></i> @yourcafe</a>
+  <!-- 🍵 چای و دمنوش -->
+  <section class="menu-section">
+    <h2>انواع چای و دمنوش</h2>
+    <div class="menu-grid">
+      <div class="menu-item"><h3>چای زعفران</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>چای بهارنارنج</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>دمنوش دارچین</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
     </div>
-    <div class="qrcode">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://yourcafe.com/menu" alt="QR Code منو">
-      <p>برای مشاهده منو با موبایل، QR را اسکن کنید</p>
+  </section>
+
+  <!-- 🍰 کیک و بستنی -->
+  <section class="menu-section">
+    <h2>انواع کیک و بستنی</h2>
+    <div class="menu-grid">
+      <div class="menu-item"><h3>کیک بستنی</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>کیک شکلاتی</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>کاپ کیک</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
     </div>
-    <p>تمامی حقوق محفوظ است © 2025</p>
-  </footer>
+  </section>
+
+  <footer>© 2025 TarhSara | همه حقوق محفوظ است</footer>
+
+  <button class="dark-toggle">🌙</button>
+  <button class="cart-toggle">🛒</button>
+
+  <!-- پنل سبد خرید -->
+  <div class="cart-panel" id="cartPanel">
+    <h3>🛍️ سبد خرید</h3>
+    <div id="cartItems"></div>
+    <p class="cart-total" id="cartTotal">جمع کل: ۰ تومان</p>
+  </div>
 
   <script>
-    // انیمیشن ورود آیتم‌ها با تاخیر
+    // انیمیشن ورود آیتم‌ها
     document.addEventListener("DOMContentLoaded", () => {
       const items = document.querySelectorAll(".menu-item");
       items.forEach((item, index) => {
-        item.style.animationDelay = `${index * 0.2}s`;
+        item.style.animationDelay = `${index * 0.15}s`;
+      });
+    });
+
+    // دارک مود
+    document.querySelector(".dark-toggle").addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+    });
+
+    // مدیریت سبد خرید
+    let cart = [];
+    const cartPanel = document.getElementById("cartPanel");
+    const cartItemsDiv = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+
+    document.querySelector(".cart-toggle").addEventListener("click", () => {
+      cartPanel.style.display = cartPanel.style.display === "flex" ? "none" : "flex";
+    });
+
+    function updateCart() {
+      cartItemsDiv.innerHTML = "";
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price;
+        const div = document.createElement("div");
+        div.classList.add("cart-item");
+        div.innerHTML = `
+          <span>${item.name} - ${item.price} تومان</span>
+          <button onclick="removeFromCart(${index})">حذف</button>
+        `;
+        cartItemsDiv.appendChild(div);
+      });
+      cartTotal.innerText = `جمع کل: ${total} تومان`;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    document.querySelectorAll(".buy-btn").forEach(btn => {
+      btn.addEventListener("click", e => {
+        const item = e.target.closest(".menu-item");
+        const name = item.querySelector("h3").innerText;
+        const price = parseInt(item.querySelector(".price").innerText);
+        cart.push({ name, price });
+        updateCart();
+        alert(`✅ ${name} به سبد خرید اضافه شد`);
+      });
+    });
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منوی کافه</title>
+  <style>
+    body {
+      font-family: "Vazir", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      color: #333;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+      background: #6a1b9a;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .dark-mode {
+      background: #121212;
+      color: #eee;
+    }
+
+    .menu-section {
+      padding: 20px;
+    }
+
+    h2 {
+      color: #6a1b9a;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .dark-mode h2 {
+      color: #bb86fc;
+      border-color: #333;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    .menu-item {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s, background 0.3s, color 0.3s;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.7s ease forwards;
+    }
+
+    .dark-mode .menu-item {
+      background: #1e1e1e;
+      color: #eee;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-5px);
+    }
+
+    h3 {
+      font-size: 1rem;
+      margin: 8px 0;
+    }
+
+    .price {
+      color: #6a1b9a;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .dark-mode .price {
+      color: #bb86fc;
+    }
+
+    .buy-btn {
+      background: #6a1b9a;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .buy-btn:hover {
+      background: #4a148c;
+    }
+
+    footer {
+      background: #6a1b9a;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.9rem;
+    }
+
+    .dark-mode footer {
+      background: #1e1e1e;
+    }
+
+    .dark-toggle, .cart-toggle {
+      position: fixed;
+      bottom: 20px;
+      background: #6a1b9a;
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .dark-toggle { left: 20px; }
+    .cart-toggle { right: 20px; }
+
+    .dark-toggle:hover, .cart-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    /* سبد خرید */
+    .cart-panel {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 300px;
+      max-height: 400px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      padding: 15px;
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+
+    .dark-mode .cart-panel {
+      background: #1e1e1e;
+      color: #eee;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0;
+      font-size: 0.9rem;
+    }
+
+    .cart-item button {
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .cart-total {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+      color: #6a1b9a;
+    }
+
+    .dark-mode .cart-total {
+      color: #bb86fc;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .menu-grid { grid-template-columns: 1fr; }
+      .menu-item { padding: 12px; }
+      footer { font-size: 0.8rem; position: sticky; bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>منوی کافه TarhSara</header>
+
+  <!-- 🍵 نوشیدنی‌های گرم -->
+  <section class="menu-section">
+    <h2>نوشیدنی‌های گرم</h2>
+    <div class="menu-grid">
+      <div class="menu-item"><h3>اسپرسو</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>دوپیو</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>کند برو</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>آیس لاته</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+    </div>
+  </section>
+
+  <!-- 🧊 نوشیدنی‌های سرد -->
+  <section class="menu-section">
+    <h2>نوشیدنی‌های سرد</h2>
+    <div class="menu-grid">
+      <div class="menu-item"><h3>موهیتو</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>آیس تی</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>دتاکس واتر</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+    </div>
+  </section>
+
+  <!-- 🍵 چای و دمنوش -->
+  <section class="menu-section">
+    <h2>انواع چای و دمنوش</h2>
+    <div class="menu-grid">
+      <div class="menu-item"><h3>چای زعفران</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>چای بهارنارنج</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>دمنوش دارچین</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+    </div>
+  </section>
+
+  <!-- 🍰 کیک و بستنی -->
+  <section class="menu-section">
+    <h2>انواع کیک و بستنی</h2>
+    <div class="menu-grid">
+      <div class="menu-item"><h3>کیک بستنی</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>کیک شکلاتی</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+      <div class="menu-item"><h3>کاپ کیک</h3><p class="price">۲۵۰۰۰</p><button class="buy-btn">ثبت خرید</button></div>
+    </div>
+  </section>
+
+  <footer>© 2025 TarhSara | همه حقوق محفوظ است</footer>
+
+  <button class="dark-toggle">🌙</button>
+  <button class="cart-toggle">🛒</button>
+
+  <!-- پنل سبد خرید -->
+  <div class="cart-panel" id="cartPanel">
+    <h3>🛍️ سبد خرید</h3>
+    <div id="cartItems"></div>
+    <p class="cart-total" id="cartTotal">جمع کل: ۰ تومان</p>
+  </div>
+
+  <script>
+    // انیمیشن ورود آیتم‌ها
+    document.addEventListener("DOMContentLoaded", () => {
+      const items = document.querySelectorAll(".menu-item");
+      items.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.15}s`;
+      });
+    });
+
+    // دارک مود
+    document.querySelector(".dark-toggle").addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+    });
+
+    // مدیریت سبد خرید
+    let cart = [];
+    const cartPanel = document.getElementById("cartPanel");
+    const cartItemsDiv = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+
+    document.querySelector(".cart-toggle").addEventListener("click", () => {
+      cartPanel.style.display = cartPanel.style.display === "flex" ? "none" : "flex";
+    });
+
+    function updateCart() {
+      cartItemsDiv.innerHTML = "";
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price;
+        const div = document.createElement("div");
+        div.classList.add("cart-item");
+        div.innerHTML = `
+          <span>${item.name} - ${item.price} تومان</span>
+          <button onclick="removeFromCart(${index})">حذف</button>
+        `;
+        cartItemsDiv.appendChild(div);
+      });
+      cartTotal.innerText = `جمع کل: ${total} تومان`;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    document.querySelectorAll(".buy-btn").forEach(btn => {
+      btn.addEventListener("click", e => {
+        const item = e.target.closest(".menu-item");
+        const name = item.querySelector("h3").innerText;
+        const price = parseInt(item.querySelector(".price").innerText);
+        cart.push({ name, price });
+        updateCart();
+        alert(`✅ ${name} به سبد خرید اضافه شد`);
       });
     });
   </script>
