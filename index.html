@@ -10,7 +10,29 @@
       font-family: sans-serif;
       background-color: #121212;
       color: #fff;
+      position: relative;
+      overflow: hidden;
     }
+
+    /* بک‌گراند اموجی‌های کافه */
+    body::before {
+      content: "☕ 🍰 🥐 🌿 ☕ 🍰 🥐 🌿 ☕ 🍰 🥐 🌿 ☕ 🍰 🥐 🌿";
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 50px;
+      color: rgba(255, 204, 0, 0.1);
+      white-space: pre-wrap;
+      pointer-events: none;
+      z-index: 0;
+      animation: moveBackground 60s linear infinite;
+    }
+
+    @keyframes moveBackground {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-100%); }
+    }
+
     header {
       background: #1e1e1e;
       padding: 15px;
@@ -21,13 +43,15 @@
       font-weight: bold;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 1;
     }
+
     .cart-icon {
       position: relative;
       cursor: pointer;
       font-size: 22px;
     }
+
     .cart-count {
       position: absolute;
       top: -8px;
@@ -38,28 +62,35 @@
       padding: 2px 6px;
       border-radius: 50%;
     }
+
     .menu {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
       padding: 20px;
+      position: relative;
+      z-index: 1;
     }
+
     .card {
       background: #1f1f1f;
       border-radius: 12px;
       padding: 15px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
+
     .card h3 {
       margin-bottom: 10px;
       color: #ffcc00;
     }
+
     .item {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin: 8px 0;
     }
+
     .price {
       background: #007bff;
       color: white;
@@ -68,6 +99,7 @@
       font-size: 14px;
       cursor: pointer;
     }
+
     .cart-modal {
       display: none;
       position: fixed;
@@ -78,18 +110,21 @@
       border-radius: 10px;
       padding: 15px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.7);
-      z-index: 20;
+      z-index: 2;
     }
+
     .cart-modal h3 {
       margin-top: 0;
       color: #ffcc00;
     }
+
     .cart-item {
       display: flex;
       justify-content: space-between;
       margin: 5px 0;
       font-size: 14px;
     }
+
     .checkout-btn {
       background: #28a745;
       color: white;
@@ -101,6 +136,7 @@
       cursor: pointer;
       font-size: 16px;
     }
+
     footer {
       text-align: center;
       background: #1e1e1e;
@@ -108,6 +144,7 @@
       position: fixed;
       width: 100%;
       bottom: 0;
+      z-index: 1;
     }
   </style>
 </head>
@@ -144,7 +181,6 @@
     </div>
   </div>
 
-  <!-- سبد خرید -->
   <div class="cart-modal" id="cart-modal">
     <h3>سبد خرید</h3>
     <div id="cart-items"></div>
@@ -165,7 +201,7 @@
     function renderCart() {
       const cartItems = document.getElementById("cart-items");
       cartItems.innerHTML = "";
-      cart.forEach((item, index) => {
+      cart.forEach(item => {
         cartItems.innerHTML += `
           <div class="cart-item">
             <span>${item.name}</span>
@@ -181,163 +217,23 @@
     }
 
     function checkout() {
-      alert("خرید شما ثبت شد ✅");
-      cart = [];
-      document.getElementById("cart-count").textContent = 0;
-      renderCart();
-      toggleCart();
-    }
-  </script>
+      if(cart.length === 0){
+        alert("سبد خرید خالی است ❌");
+        return;
+      }
 
-</body>
-</html><!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منوی کافه</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background-color: #121212;
-      color: #fff;
-    }
-    header {
-      background: #1e1e1e;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 20px;
-      font-weight: bold;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .cart-icon {
-      position: relative;
-      cursor: pointer;
-      font-size: 22px;
-    }
-    .cart-count {
-      position: absolute;
-      top: -8px;
-      right: -10px;
-      background: red;
-      color: white;
-      font-size: 12px;
-      padding: 2px 6px;
-      border-radius: 50%;
-    }
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-    .card {
-      background: #1f1f1f;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-    }
-    .card h3 {
-      margin-bottom: 10px;
-      color: #ffcc00;
-    }
-    .item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 8px 0;
-    }
-    .price {
-      background: #007bff;
-      color: white;
-      padding: 4px 8px;
-      border-radius: 8px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-    .cart-modal {
-      display: none;
-      position: fixed;
-      top: 60px;
-      right: 10px;
-      width: 300px;
-      background: #1f1f1f;
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.7);
-      z-index: 20;
-    }
-    .cart-modal h3 {
-      margin-top: 0;
-      color: #ffcc00;
-    }
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      margin: 5px 0;
-      font-size: 14px;
-    }
-    .checkout-btn {
-      background: #28a745;
-      color: white;
-      padding: 8px;
-      border: none;
-      border-radius: 6px;
-      width: 100%;
-      margin-top: 10px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    footer {
-      text-align: center;
-      background: #1e1e1e;
-      padding: 10px;
-      position: fixed;
-      width: 100%;
-      bottom: 0;
-    }
-  </style>
-</head>
-<body>
-
-
-    
-  <footer>© 2025 کافه شما</footer>
-
-  <script>
-    let cart = [];
-
-    function addToCart(name, price) {
-      cart.push({ name, price });
-      document.getElementById("cart-count").textContent = cart.length;
-      renderCart();
-    }
-
-    function renderCart() {
-      const cartItems = document.getElementById("cart-items");
-      cartItems.innerHTML = "";
-      cart.forEach((item, index) => {
-        cartItems.innerHTML += `
-          <div class="cart-item">
-            <span>${item.name}</span>
-            <span>${item.price} تومان</span>
-          </div>
-        `;
+      // پیام حس خوب کافه
+      let coffeeVibes = "☕🍰🥐🌿\n";
+      let total = cart.reduce((a,b)=>a+b.price,0);
+      let message = coffeeVibes + "سفارش شما ثبت شد ✅\n";
+      cart.forEach(item => {
+        message += `- ${item.name}: ${item.price} تومان\n`;
       });
-    }
+      message += `جمع کل: ${total} تومان\n` + coffeeVibes;
 
-    function toggleCart() {
-      const modal = document.getElementById("cart-modal");
-      modal.style.display = modal.style.display === "block" ? "none" : "block";
-    }
+      alert(message);
 
-    function checkout() {
-      alert("خرید شما ثبت شد ✅");
+      // خالی کردن سبد خرید و آپدیت شمارنده
       cart = [];
       document.getElementById("cart-count").textContent = 0;
       renderCart();
@@ -347,5 +243,3 @@
 
 </body>
 </html>
-
-
