@@ -11,24 +11,7 @@
       background-color: #121212;
       color: #fff;
       position: relative;
-      /* overflow: hidden حذف شد تا اسکرول فعال باشه */
     }
-
-    /* بک‌گراند حرفه‌ای با اموجی‌های پراکنده */
-    .emoji {
-      position: absolute;
-      font-size: 30px;
-      opacity: 0.5;
-      user-select: none;
-      pointer-events: none;
-      animation: float linear infinite;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(100vh) translateX(0) rotate(0deg); }
-      100% { transform: translateY(-10vh) translateX(20px) rotate(360deg); }
-    }
-
     header {
       background: #1e1e1e;
       padding: 15px;
@@ -41,13 +24,11 @@
       top: 0;
       z-index: 10;
     }
-
     .cart-icon {
       position: relative;
       cursor: pointer;
       font-size: 22px;
     }
-
     .cart-count {
       position: absolute;
       top: -8px;
@@ -58,35 +39,28 @@
       padding: 2px 6px;
       border-radius: 50%;
     }
-
     .menu {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
       padding: 20px;
-      position: relative;
-      z-index: 1;
     }
-
     .card {
       background: #1f1f1f;
       border-radius: 12px;
       padding: 15px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
-
     .card h3 {
       margin-bottom: 10px;
       color: #ffcc00;
     }
-
     .item {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin: 8px 0;
     }
-
     .price {
       background: #007bff;
       color: white;
@@ -95,7 +69,6 @@
       font-size: 14px;
       cursor: pointer;
     }
-
     .cart-modal {
       display: none;
       position: fixed;
@@ -106,21 +79,18 @@
       border-radius: 10px;
       padding: 15px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.7);
-      z-index: 2;
+      z-index: 20;
     }
-
     .cart-modal h3 {
       margin-top: 0;
       color: #ffcc00;
     }
-
     .cart-item {
       display: flex;
       justify-content: space-between;
       margin: 5px 0;
       font-size: 14px;
     }
-
     .checkout-btn {
       background: #28a745;
       color: white;
@@ -132,7 +102,6 @@
       cursor: pointer;
       font-size: 16px;
     }
-
     footer {
       text-align: center;
       background: #1e1e1e;
@@ -140,7 +109,21 @@
       position: fixed;
       width: 100%;
       bottom: 0;
+      z-index: 5;
+    }
+    /* اموجی های متحرک برای حس کافه */
+    .emoji {
+      position: fixed;
+      font-size: 24px;
+      opacity: 0.7;
+      animation: float 12s infinite;
       z-index: 1;
+      pointer-events: none;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(1); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
     }
   </style>
 </head>
@@ -177,6 +160,7 @@
     </div>
   </div>
 
+  <!-- سبد خرید -->
   <div class="cart-modal" id="cart-modal">
     <h3>سبد خرید</h3>
     <div id="cart-items"></div>
@@ -184,6 +168,18 @@
   </div>
 
   <footer>© 2025 کافه شما</footer>
+
+  <!-- دکمه و موزیک -->
+  <div style="position: fixed; bottom: 70px; right: 10px; z-index: 30;">
+    <button id="music-btn" onclick="toggleMusic()" 
+      style="background:#6f4e37; color:white; border:none; padding:10px 15px; border-radius:10px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.4);">
+      🎵 پخش موزیک
+    </button>
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/16/audio_3e8c0800b2.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
     let cart = [];
@@ -217,37 +213,37 @@
         alert("سبد خرید خالی است ❌");
         return;
       }
-
-      let coffeeVibes = "☕🍰🥐🌿\n";
-      let total = cart.reduce((a,b)=>a+b.price,0);
-      let message = coffeeVibes + "سفارش شما ثبت شد ✅\n";
-      cart.forEach(item => {
-        message += `- ${item.name}: ${item.price} تومان\n`;
-      });
-      message += `جمع کل: ${total} تومان\n` + coffeeVibes;
-
-      alert(message);
-
+      alert("خرید شما ثبت شد ✅");
       cart = [];
       document.getElementById("cart-count").textContent = 0;
       renderCart();
       toggleCart();
     }
 
-    // ایجاد اموجی‌های پراکنده برای حس کافه
-    const emojis = ["☕","🍰","🥐","🌿"];
-    for(let i=0; i<30; i++){
-      const e = document.createElement("div");
+    function toggleMusic() {
+      const music = document.getElementById("bg-music");
+      const btn = document.getElementById("music-btn");
+      if (music.paused) {
+        music.play();
+        btn.textContent = "⏸ توقف موزیک";
+      } else {
+        music.pause();
+        btn.textContent = "🎵 پخش موزیک";
+      }
+    }
+
+    // ایجاد اموجی های شناور
+    const emojis = ["☕","🍰","🥐","🍪","🧁"];
+    for(let i=0;i<20;i++){
+      let e = document.createElement("div");
       e.className = "emoji";
       e.textContent = emojis[Math.floor(Math.random()*emojis.length)];
       e.style.left = Math.random()*100 + "vw";
-      e.style.fontSize = 20 + Math.random()*40 + "px";
-      e.style.animationDuration = 30 + Math.random()*30 + "s";
+      e.style.animationDuration = (10 + Math.random()*10) + "s";
+      e.style.fontSize = (20 + Math.random()*20) + "px";
       document.body.appendChild(e);
     }
-
   </script>
 
 </body>
 </html>
-
