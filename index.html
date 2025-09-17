@@ -8,12 +8,13 @@
     body {
       margin: 0;
       font-family: sans-serif;
-      background-color: #121212;
+      background: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
       color: #fff;
-      position: relative;
+      overflow-y: auto;
+      height: 100vh;
     }
     header {
-      background: #1e1e1e;
+      background: rgba(30,30,30,0.85);
       padding: 15px;
       display: flex;
       justify-content: space-between;
@@ -23,6 +24,7 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      backdrop-filter: blur(8px);
     }
     .cart-icon {
       position: relative;
@@ -44,14 +46,18 @@
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
       padding: 20px;
-      z-index: 5;
-      position: relative;
     }
     .card {
-      background: #1f1f1f;
+      background: rgba(31, 31, 31, 0.6);
       border-radius: 12px;
       padding: 15px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.7);
     }
     .card h3 {
       margin-bottom: 10px;
@@ -66,22 +72,28 @@
     .price {
       background: #007bff;
       color: white;
-      padding: 4px 8px;
+      padding: 6px 12px;
       border-radius: 8px;
       font-size: 14px;
       cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+    .price:hover {
+      background: #0056b3;
+      transform: scale(1.1);
     }
     .cart-modal {
       display: none;
       position: fixed;
-      top: 60px;
+      top: 70px;
       right: 10px;
       width: 300px;
-      background: #1f1f1f;
+      background: rgba(31, 31, 31, 0.85);
       border-radius: 10px;
       padding: 15px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.7);
       z-index: 20;
+      backdrop-filter: blur(10px);
     }
     .cart-modal h3 {
       margin-top: 0;
@@ -103,40 +115,20 @@
       margin-top: 10px;
       cursor: pointer;
       font-size: 16px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .checkout-btn:hover {
+      background: #1e7e34;
+      transform: scale(1.05);
     }
     footer {
       text-align: center;
-      background: #1e1e1e;
+      background: rgba(30,30,30,0.85);
       padding: 10px;
       position: fixed;
       width: 100%;
       bottom: 0;
-      z-index: 10;
-    }
-
-    /* اموجی‌های متحرک */
-    .emoji {
-      position: fixed;
-      bottom: 100%;
-      opacity: 0.8;
-      z-index: 1;
-      pointer-events: none;
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
-    @keyframes fall {
-      0% {
-        transform: translateY(-10vh) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
+      backdrop-filter: blur(8px);
     }
   </style>
 </head>
@@ -180,18 +172,6 @@
     <button class="checkout-btn" onclick="checkout()">ثبت خرید ✅</button>
   </div>
 
-  <!-- کنترل موزیک -->
-  <div style="position: fixed; bottom: 70px; right: 10px; z-index: 30;">
-    <button id="music-btn" onclick="toggleMusic()" 
-      style="background:#6f4e37; color:white; border:none; padding:10px 15px; border-radius:10px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.4);">
-      🎵 پخش موزیک
-    </button>
-  </div>
-
-  <audio id="bg-music" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/10/16/audio_3e8c0800b2.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
-  </audio>
-
   <footer>© 2025 کافه شما</footer>
 
   <script>
@@ -206,7 +186,7 @@
     function renderCart() {
       const cartItems = document.getElementById("cart-items");
       cartItems.innerHTML = "";
-      cart.forEach((item) => {
+      cart.forEach((item, index) => {
         cartItems.innerHTML += `
           <div class="cart-item">
             <span>${item.name}</span>
@@ -228,31 +208,7 @@
       renderCart();
       toggleCart();
     }
-
-    function toggleMusic() {
-      const music = document.getElementById("bg-music");
-      const btn = document.getElementById("music-btn");
-      if (music.paused) {
-        music.play();
-        btn.textContent = "⏸ توقف موزیک";
-      } else {
-        music.pause();
-        btn.textContent = "🎵 پخش موزیک";
-      }
-    }
-
-    // ایجاد اموجی‌های متحرک
-    const emojis = ["☕","🍩","🍪","🥐","🍰","🧁","🍫"];
-    for (let i = 0; i < 25; i++) {
-      let e = document.createElement("div");
-      e.className = "emoji";
-      e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      e.style.left = Math.random() * 100 + "vw";
-      e.style.fontSize = (20 + Math.random() * 25) + "px";
-      e.style.animationDuration = (8 + Math.random() * 7) + "s";
-      e.style.animationDelay = Math.random() * 10 + "s";
-      document.body.appendChild(e);
-    }
   </script>
+
 </body>
 </html>
