@@ -8,28 +8,14 @@
     body {
       margin: 0;
       font-family: sans-serif;
-      background-color: #121212;
-      color: #fff;
+      background: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #3b2f2f;
       overflow-x: hidden;
-    }
-    /* دانه های قهوه */
-    .coffee-bean {
-      position: absolute;
-      top: -20px;
-      background: #6b4226;
-      border-radius: 50%;
-      z-index: 0;
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
-    @keyframes fall {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(110vh) rotate(360deg); }
     }
 
     header {
-      background: rgba(30,30,30,0.9);
+      background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(5px);
       padding: 15px;
       display: flex;
@@ -40,7 +26,9 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      color: #3b2f2f;
     }
+
     .cart-icon {
       position: relative;
       cursor: pointer;
@@ -50,98 +38,90 @@
       position: absolute;
       top: -8px;
       right: -10px;
-      background: red;
+      background: #ff6347;
       color: white;
       font-size: 12px;
       padding: 2px 6px;
       border-radius: 50%;
     }
+
     .menu {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
       padding: 20px;
-      backdrop-filter: blur(10px);
-      background: rgba(255,255,255,0.05);
-      border-radius: 15px;
-      margin: 20px;
     }
+
     .card {
-      background: rgba(31,31,31,0.8);
+      background: rgba(255, 248, 240, 0.8);
       border-radius: 12px;
       padding: 15px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-      transition: all 0.3s ease;
-      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      color: #3b2f2f;
+      backdrop-filter: blur(3px);
+      transition: transform 0.3s;
     }
-    /* افکت نورانی و حرکت کارت */
-    .card::after {
-      content: '';
-      position: absolute;
-      top: -5px; left: -5px; right: -5px; bottom: -5px;
-      border-radius: 12px;
-      background: linear-gradient(45deg, #ffcc00, #ff7f50, #ffcc00, #ff7f50);
-      opacity: 0;
-      z-index: -1;
-      filter: blur(10px);
-      transition: opacity 0.3s ease;
-      animation: glow 4s linear infinite;
-      background-size: 400% 400%;
+
+    .card:hover {
+      transform: scale(1.05);
     }
-    @keyframes glow {
-      0%{background-position:0% 50%;}
-      50%{background-position:100% 50%;}
-      100%{background-position:0% 50%;}
-    }
-    .card:hover::after {
-      opacity: 0.6;
-    }
+
     .card h3 {
       margin-bottom: 10px;
-      color: #ffcc00;
+      color: #8b4513;
     }
+
     .item {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin: 8px 0;
     }
+
     .price {
-      background: #007bff;
+      background: #d2691e;
       color: white;
       padding: 4px 8px;
       border-radius: 8px;
       font-size: 14px;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s;
     }
-    .price.bounce {
-      transform: scale(1.3);
+
+    .price:hover {
+      transform: scale(1.2);
+      background: #ff7f50;
     }
+
     .cart-modal {
       display: none;
       position: fixed;
       top: 60px;
       right: 10px;
       width: 300px;
-      background: #1f1f1f;
+      background: rgba(255, 248, 240, 0.9);
       border-radius: 10px;
       padding: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
       z-index: 20;
+      color: #3b2f2f;
+      backdrop-filter: blur(5px);
     }
+
     .cart-modal h3 {
       margin-top: 0;
-      color: #ffcc00;
+      color: #8b4513;
     }
+
     .cart-item {
       display: flex;
       justify-content: space-between;
       margin: 5px 0;
       font-size: 14px;
     }
+
     .checkout-btn {
-      background: #28a745;
+      background: #8b0000;
       color: white;
       padding: 8px;
       border: none;
@@ -150,19 +130,22 @@
       margin-top: 10px;
       cursor: pointer;
       font-size: 16px;
-      transition: transform 0.2s ease;
+      transition: background 0.3s;
     }
-    .checkout-btn.bounce {
-      transform: scale(1.1);
+
+    .checkout-btn:hover {
+      background: #ff4500;
     }
+
     footer {
       text-align: center;
-      background: rgba(30,30,30,0.9);
-      backdrop-filter: blur(5px);
+      background: rgba(255, 255, 255, 0.8);
       padding: 10px;
       position: fixed;
       width: 100%;
       bottom: 0;
+      color: #3b2f2f;
+      backdrop-filter: blur(5px);
     }
   </style>
 </head>
@@ -211,14 +194,6 @@
     let cart = [];
 
     function addToCart(name, price) {
-      const btns = document.querySelectorAll('.price');
-      btns.forEach(btn => {
-        if(btn.textContent.includes(name)) {
-          btn.classList.add('bounce');
-          setTimeout(() => btn.classList.remove('bounce'), 200);
-        }
-      });
-
       cart.push({ name, price });
       document.getElementById("cart-count").textContent = cart.length;
       renderCart();
@@ -227,7 +202,7 @@
     function renderCart() {
       const cartItems = document.getElementById("cart-items");
       cartItems.innerHTML = "";
-      cart.forEach((item, index) => {
+      cart.forEach((item) => {
         cartItems.innerHTML += `
           <div class="cart-item">
             <span>${item.name}</span>
@@ -243,28 +218,13 @@
     }
 
     function checkout() {
-      const checkoutBtn = document.querySelector('.checkout-btn');
-      checkoutBtn.classList.add('bounce');
-      setTimeout(() => checkoutBtn.classList.remove('bounce'), 200);
-
       alert("خرید شما ثبت شد ✅");
       cart = [];
       document.getElementById("cart-count").textContent = 0;
       renderCart();
       toggleCart();
     }
-
-    // دانه های قهوه متحرک
-    for(let i = 0; i < 30; i++){
-      const bean = document.createElement('div');
-      bean.classList.add('coffee-bean');
-      bean.style.left = Math.random() * 100 + 'vw';
-      bean.style.animationDuration = (5 + Math.random() * 5) + 's';
-      bean.style.width = (5 + Math.random() * 10) + 'px';
-      bean.style.height = bean.style.width;
-      bean.style.opacity = 0.5 + Math.random() * 0.5;
-      document.body.appendChild(bean);
-    }
   </script>
+
 </body>
 </html>
