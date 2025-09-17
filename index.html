@@ -11,26 +11,22 @@
       background-color: #121212;
       color: #fff;
       position: relative;
-      overflow: hidden;
+      /* overflow: hidden حذف شد تا اسکرول فعال باشه */
     }
 
-    /* بک‌گراند اموجی‌های کافه */
-    body::before {
-      content: "☕ 🍰 🥐 🌿 ☕ 🍰 🥐 🌿 ☕ 🍰 🥐 🌿 ☕ 🍰 🥐 🌿";
+    /* بک‌گراند حرفه‌ای با اموجی‌های پراکنده */
+    .emoji {
       position: absolute;
-      top: 0;
-      left: 0;
-      font-size: 50px;
-      color: rgba(255, 204, 0, 0.1);
-      white-space: pre-wrap;
+      font-size: 30px;
+      opacity: 0.2;
+      user-select: none;
       pointer-events: none;
-      z-index: 0;
-      animation: moveBackground 60s linear infinite;
+      animation: float linear infinite;
     }
 
-    @keyframes moveBackground {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-100%); }
+    @keyframes float {
+      0% { transform: translateY(100vh) translateX(0) rotate(0deg); }
+      100% { transform: translateY(-10vh) translateX(20px) rotate(360deg); }
     }
 
     header {
@@ -43,7 +39,7 @@
       font-weight: bold;
       position: sticky;
       top: 0;
-      z-index: 1;
+      z-index: 10;
     }
 
     .cart-icon {
@@ -222,7 +218,6 @@
         return;
       }
 
-      // پیام حس خوب کافه
       let coffeeVibes = "☕🍰🥐🌿\n";
       let total = cart.reduce((a,b)=>a+b.price,0);
       let message = coffeeVibes + "سفارش شما ثبت شد ✅\n";
@@ -233,12 +228,24 @@
 
       alert(message);
 
-      // خالی کردن سبد خرید و آپدیت شمارنده
       cart = [];
       document.getElementById("cart-count").textContent = 0;
       renderCart();
       toggleCart();
     }
+
+    // ایجاد اموجی‌های پراکنده برای حس کافه
+    const emojis = ["☕","🍰","🥐","🌿"];
+    for(let i=0; i<30; i++){
+      const e = document.createElement("div");
+      e.className = "emoji";
+      e.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      e.style.left = Math.random()*100 + "vw";
+      e.style.fontSize = 20 + Math.random()*40 + "px";
+      e.style.animationDuration = 30 + Math.random()*30 + "s";
+      document.body.appendChild(e);
+    }
+
   </script>
 
 </body>
