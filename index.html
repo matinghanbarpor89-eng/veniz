@@ -8,13 +8,13 @@
     body {
       margin: 0;
       font-family: sans-serif;
-      background: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
-      background-size: cover;
+      background: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
       color: #fff;
-      backdrop-filter: blur(6px);
+      overflow-y: auto;
+      height: 100vh;
     }
     header {
-      background: rgba(30,30,30,0.9);
+      background: rgba(30,30,30,0.85);
       padding: 15px;
       display: flex;
       justify-content: space-between;
@@ -24,6 +24,7 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      backdrop-filter: blur(8px);
     }
     .cart-icon {
       position: relative;
@@ -47,11 +48,16 @@
       padding: 20px;
     }
     .card {
-      background: rgba(31,31,31,0.8);
+      background: rgba(31, 31, 31, 0.6);
       border-radius: 12px;
       padding: 15px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.7);
     }
     .card h3 {
       margin-bottom: 10px;
@@ -66,11 +72,11 @@
     .price {
       background: #007bff;
       color: white;
-      padding: 4px 8px;
+      padding: 6px 12px;
       border-radius: 8px;
       font-size: 14px;
       cursor: pointer;
-      transition: transform 0.2s, background 0.3s;
+      transition: transform 0.2s ease, background 0.3s ease;
     }
     .price:hover {
       background: #0056b3;
@@ -79,14 +85,15 @@
     .cart-modal {
       display: none;
       position: fixed;
-      top: 60px;
+      top: 70px;
       right: 10px;
       width: 300px;
-      background: #1f1f1f;
+      background: rgba(31, 31, 31, 0.85);
       border-radius: 10px;
       padding: 15px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.7);
       z-index: 20;
+      backdrop-filter: blur(10px);
     }
     .cart-modal h3 {
       margin-top: 0;
@@ -108,21 +115,20 @@
       margin-top: 10px;
       cursor: pointer;
       font-size: 16px;
-      transition: background 0.3s;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
     .checkout-btn:hover {
       background: #1e7e34;
+      transform: scale(1.05);
     }
     footer {
       text-align: center;
-      background: rgba(30,30,30,0.9);
+      background: rgba(30,30,30,0.85);
       padding: 10px;
       position: fixed;
       width: 100%;
       bottom: 0;
-    }
-    audio {
-      display: none;
+      backdrop-filter: blur(8px);
     }
   </style>
 </head>
@@ -167,12 +173,6 @@
   </div>
 
   <footer>© 2025 کافه شما</footer>
-
-  <!-- موزیک پس‌زمینه -->
-  <audio autoplay loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
-  </audio>
 
   <script>
     let cart = [];
