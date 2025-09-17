@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منوی کافه</title>
+
+  <!-- جوازگیریپ -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2776df">
+  
+  <style>
+    body {
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      background: linear-gradient(to bottom, #1b4eb5, #2776df);
+      color: white;
+      direction: rtl;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    header {
+      background: #144e46;
+      color: white;
+      padding: 15px;
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      position: sticky;
+      top: 0;
+    }
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      background: #fff;
+      color: #144e46;
+    }
+    .controls input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    .controls button {
+      margin-right: 10px;
+      padding: 8px 15px;
+      background: #2776df;
+      border: none;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .controls button:hover {
+      background: #144e46;
+    }
+    .menu {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      color: black;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+    h2 {
+      font-size: 20px;
+      color: #144e46;
+      border-bottom: 2px solid #2776df;
+      padding-bottom: 8px;
+      margin-bottom: 15px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #f0f4f8;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.2s;
+    }
+    li:hover {
+      transform: scale(1.02);
+    }
+    .price {
+      font-weight: bold;
+      color: #2776df;
+    }
+
+    /* حالت تاریک */
+    body.dark {
+      background: #111;
+      color: #eee;
+    }
+    body.dark .menu {
+      background: #222;
+      color: #eee;
+    }
+    body.dark .controls {
+      background: #333;
+      color: #eee;
+    }
+    body.dark li {
+      background: #444;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <header>☕ کافه ونیز</header>
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="جستجو در منو...">
+    <button id="themeBtn">🌙</button>
+  </div>
+
+  <div class="menu">
+    <h2>نوشیدنی‌های گرم</h2>
+    <ul>
+      <li>قهوه ترک <span class="price">80,000</span></li>
+      <li>کاپوچینو <span class="price">120,000</span></li>
+      <li>هات چاکلت <span class="price">100,000</span></li>
+      <li>لته نارگیل <span class="price">180,000</span></li>
+      <li>امریکانو <span class="price">140,000</span></li>
+      <li>کارامل ماکیاتو <span class="price">150,000</span></li>
+      <li>موکا <span class="price">200,000</span></li>
+      <li>ماچا <span class="price">198,000</span></li>
+    </ul>
+
+    <h2>نوشیدنی‌های سرد</h2>
+    <ul>
+      <li>آیس لته <span class="price">130,000</span></li>
+      <li>ایس کارامل ماکیاتو <span class="price">190,000</span></li>
+      <li>ایس امریکانو <span class="price">140,000</span></li>
+      <li>ماچا نارگیل سرد <span class="price">198,000</span></li>
+      <li>ایس موکا <span class="price">220,000</span></li>
+      <li>لته نارگیل <span class="price">180,000</span></li>
+    </ul>
+
+    <h2>دسرها</h2>
+    <ul>
+      <li>کیک شکلاتی <span class="price">150,000</span></li>
+      <li>چیزکیک <span class="price">160,000</span></li>
+      <li>دبی چیزکیک <span class="price">200,000</span></li>
+      <li>لوف پسته <span class="price">130,000</span></li>
+      <li>کروسان <span class="price">188,000</span></li>
+      <li>کوکی <span class="price">100,000</span></li>
+    </ul>
+  </div>
+
+  <script>
+    // ===== جستجو =====
+    const searchInput = document.getElementById("search");
+    searchInput.addEventListener("input", () => {
+      const filter = searchInput.value.toLowerCase();
+      document.querySelectorAll(".menu li").forEach(li => {
+        const text = li.textContent.toLowerCase();
+        li.style.display = text.includes(filter) ? "" : "none";
+      });
+    });
+
+    // ===== تغییر تم (روشن/تاریک) =====
+    const themeBtn = document.getElementById("themeBtn");
+    themeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      themeBtn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+    });
+
+    // ===== ثبت Service Worker =====
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js")
+        .then(reg => console.log("Service Worker ثبت شد"))
+        .catch(err => console.log("خطا در ثبت SW:", err));
+    }
+
+    // ===== رویداد نصب PWA =====
+    let deferredPrompt;
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const installBtn = document.createElement("button");
+      installBtn.textContent = "📲 نصب اپ";
+      installBtn.style.position = "fixed";
+      installBtn.style.bottom = "20px";
+      installBtn.style.left = "20px";
+      installBtn.style.padding = "10px 20px";
+      installBtn.style.background = "#2776df";
+      installBtn.style.color = "#fff";
+      installBtn.style.border = "none";
+      installBtn.style.borderRadius = "10px";
+      document.body.appendChild(installBtn);
+
+      installBtn.addEventListener("click", () => {
+        installBtn.style.display = "none";
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choice) => {
+          if (choice.outcome === "accepted") {
+            console.log("کاربر نصب را پذیرفت");
+          } else {
+            console.log("کاربر نصب را رد کرد");
+          }
+          deferredPrompt = null;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+
