@@ -1,222 +1,210 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>منوی کافه</title>
-<style>
-body {
-  margin: 0;
-  font-family: sans-serif;
-  background: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
-  background-size: cover;
-  color: #3b2f2f;
-  overflow-x: hidden;
-  position: relative;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منوی کافه</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #3b2f2f;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-/* بخار متحرک قهوه */
-.steam {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 30px;
-  height: 60px;
-  background: radial-gradient(ellipse at center, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 70%);
-  border-radius: 50%;
-  opacity: 0.6;
-  animation: rise 3s linear infinite;
-  transform: translateX(-50%) scaleX(0.5);
-}
-.steam:nth-child(2) { left: 45%; animation-delay: 0.5s; }
-.steam:nth-child(3) { left: 55%; animation-delay: 1s; }
-@keyframes rise {
-  0% { transform: translateX(-50%) translateY(0) scaleX(0.5); opacity:0.6; }
-  50% { transform: translateX(-50%) translateY(-40px) scaleX(0.6); opacity:0.3; }
-  100% { transform: translateX(-50%) translateY(-80px) scaleX(0.7); opacity:0; }
-}
+    header {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(5px);
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 20px;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      color: #3b2f2f;
+    }
 
-/* دانه های قهوه */
-.coffee-bean {
-  position: absolute;
-  width: 10px;
-  height: 6px;
-  background: #4b2e2e;
-  border-radius: 50%;
-  animation: floatBean linear infinite;
-}
-@keyframes floatBean {
-  0% { transform: translateY(0) rotate(0deg); opacity:1; }
-  50% { opacity:0.7; }
-  100% { transform: translateY(-600px) rotate(360deg); opacity:0; }
-}
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      font-size: 22px;
+    }
 
-/* Header */
-header {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(5px);
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 20px;
-  font-weight: bold;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  color: #3b2f2f;
-}
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: #ff6347;
+      color: white;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 50%;
+    }
 
-.cart-icon {
-  position: relative;
-  cursor: pointer;
-  font-size: 22px;
-}
-.cart-count {
-  position: absolute;
-  top: -8px;
-  right: -10px;
-  background: #ff6347;
-  color: white;
-  font-size: 12px;
-  padding: 2px 6px;
-  border-radius: 50%;
-}
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      z-index: 1;
+      position: relative;
+    }
 
-/* Menu */
-.menu {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  position: relative;
-  z-index: 1;
-}
+    .card {
+      background: rgba(255, 248, 240, 0.8);
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      color: #3b2f2f;
+      backdrop-filter: blur(3px);
+      transition: transform 0.3s;
+      position: relative;
+      z-index: 1;
+    }
 
-.card {
-  background: rgba(255, 248, 240, 0.8);
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  color: #3b2f2f;
-  backdrop-filter: blur(3px);
-  transition: transform 0.3s;
-}
-.card:hover { transform: scale(1.05); }
+    .card:hover {
+      transform: scale(1.05);
+    }
 
-.card h3 { margin-bottom: 10px; color: #8b4513; }
+    .card h3 {
+      margin-bottom: 10px;
+      color: #8b4513;
+    }
 
-.item { display: flex; justify-content: space-between; align-items: center; margin: 8px 0; }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0;
+    }
 
-.price {
-  background: #d2691e;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-.price:hover { transform: scale(1.2); background: #ff7f50; }
+    .price {
+      background: #d2691e;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
 
-/* انیمیشن ایموجی */
-@keyframes bounceEmoji {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-.emoji { display:inline-block; animation: bounceEmoji 1s infinite; }
+    .price:hover {
+      transform: scale(1.2);
+      background: #ff7f50;
+    }
 
-/* Cart modal */
-.cart-modal {
-  display: none;
-  position: fixed;
-  top: 60px;
-  right: 10px;
-  width: 300px;
-  background: rgba(255, 248, 240, 0.9);
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-  z-index: 20;
-  color: #3b2f2f;
-  backdrop-filter: blur(5px);
-}
-.cart-modal h3 { margin-top: 0; color: #8b4513; }
-.cart-item { display: flex; justify-content: space-between; margin: 5px 0; font-size: 14px; }
+    .cart-modal {
+      display: none;
+      position: fixed;
+      top: 60px;
+      right: 10px;
+      width: 300px;
+      background: rgba(255, 248, 240, 0.9);
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      z-index: 20;
+      color: #3b2f2f;
+      backdrop-filter: blur(5px);
+    }
 
-/* Checkout button */
-.checkout-btn {
-  background: #8b0000;
-  color: white;
-  padding: 8px;
-  border: none;
-  border-radius: 6px;
-  width: 100%;
-  margin-top: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: all 0.3s;
-}
-.checkout-btn:hover { background: #ff4500; transform: scale(1.05); }
+    .cart-modal h3 {
+      margin-top: 0;
+      color: #8b4513;
+    }
 
-footer {
-  text-align: center;
-  background: rgba(255, 255, 255, 0.8);
-  padding: 10px;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  color: #3b2f2f;
-  backdrop-filter: blur(5px);
-}
-</style>
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .checkout-btn {
+      background: #8b0000;
+      color: white;
+      padding: 8px;
+      border: none;
+      border-radius: 6px;
+      width: 100%;
+      margin-top: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .checkout-btn:hover {
+      background: #ff4500;
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      color: #3b2f2f;
+      backdrop-filter: blur(5px);
+    }
+
+    /* دانه های قهوه */
+    .coffee-bean {
+      position: absolute;
+      width: 10px;
+      height: 6px;
+      background: #4b2e2e;
+      border-radius: 50%;
+      animation: floatBean linear infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    @keyframes floatBean {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); }
+      50% { transform: translateY(-20px) translateX(10px) rotate(180deg); }
+      100% { transform: translateY(0) translateX(0) rotate(360deg); }
+    }
+
+  </style>
 </head>
 <body>
 
-<!-- بخار -->
-<div class="steam"></div>
-<div class="steam"></div>
-<div class="steam"></div>
-
-<!-- دانه‌های قهوه -->
-<script>
-for(let i=0;i<30;i++){
-  let bean = document.createElement('div');
-  bean.className='coffee-bean';
-  bean.style.left = Math.random()*100+'%';
-  bean.style.bottom = Math.random()*100+'px';
-  bean.style.animationDuration = (5+Math.random()*5)+'s';
-  bean.style.width = 5+Math.random()*10+'px';
-  bean.style.height = 3+Math.random()*6+'px';
-  document.body.appendChild(bean);
-}
-</script>
-
 <header>
-  <span>منوی کافه <span class="emoji">☕</span></span>
-  <div class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cart-count">0</span></div>
+  <span>منوی کافه ☕</span>
+  <div class="cart-icon" onclick="toggleCart()">
+    🛒
+    <span class="cart-count" id="cart-count">0</span>
+  </div>
 </header>
 
 <div class="menu">
   <div class="card">
     <h3>نوشیدنی های گرم</h3>
-    <div class="item"><span>اسپرسو <span class="emoji">☕</span></span><span class="price" onclick="addToCart('اسپرسو',25000)">۲۵۰۰۰ تومان</span></div>
-    <div class="item"><span>دوپیو <span class="emoji">☕</span></span><span class="price" onclick="addToCart('دوپیو',25000)">۲۵۰۰۰ تومان</span></div>
-    <div class="item"><span>قهوه ترک <span class="emoji">☕</span></span><span class="price" onclick="addToCart('قهوه ترک',25000)">۲۵۰۰۰ تومان</span></div>
+    <div class="item"><span>اسپرسو ☕</span><span class="price" onclick="addToCart('اسپرسو',25000)">۲۵۰۰۰ تومان</span></div>
+    <div class="item"><span>دوپیو ☕</span><span class="price" onclick="addToCart('دوپیو',25000)">۲۵۰۰۰ تومان</span></div>
+    <div class="item"><span>قهوه ترک ☕</span><span class="price" onclick="addToCart('قهوه ترک',25000)">۲۵۰۰۰ تومان</span></div>
   </div>
 
   <div class="card">
     <h3>نوشیدنی های سرد</h3>
-    <div class="item"><span>آیس لاته <span class="emoji">🥤</span></span><span class="price" onclick="addToCart('آیس لاته',25000)">۲۵۰۰۰ تومان</span></div>
-    <div class="item"><span>موهیتو <span class="emoji">🍹</span></span><span class="price" onclick="addToCart('موهیتو',25000)">۲۵۰۰۰ تومان</span></div>
-    <div class="item"><span>آیس تی <span class="emoji">🥤</span></span><span class="price" onclick="addToCart('آیس تی',25000)">۲۵۰۰۰ تومان</span></div>
+    <div class="item"><span>آیس لاته 🥤</span><span class="price" onclick="addToCart('آیس لاته',25000)">۲۵۰۰۰ تومان</span></div>
+    <div class="item"><span>موهیتو 🥤</span><span class="price" onclick="addToCart('موهیتو',25000)">۲۵۰۰۰ تومان</span></div>
+    <div class="item"><span>آیس تی 🥤</span><span class="price" onclick="addToCart('آیس تی',25000)">۲۵۰۰۰ تومان</span></div>
   </div>
 
   <div class="card">
     <h3>کیک و دمنوش</h3>
-    <div class="item"><span>کیک شکلاتی <span class="emoji">🍰</span></span><span class="price" onclick="addToCart('کیک شکلاتی',25000)">۲۵۰۰۰ تومان</span></div>
-    <div class="item"><span>چای زعفران <span class="emoji">🍵</span></span><span class="price" onclick="addToCart('چای زعفران',25000)">۲۵۰۰۰ تومان</span></div>
-    <div class="item"><span>دمنوش دارچین <span class="emoji">🍵</span></span><span class="price" onclick="addToCart('دمنوش دارچین',25000)">۲۵۰۰۰ تومان</span></div>
+    <div class="item"><span>کیک شکلاتی 🍰</span><span class="price" onclick="addToCart('کیک شکلاتی',25000)">۲۵۰۰۰ تومان</span></div>
+    <div class="item"><span>چای زعفران 🍵</span><span class="price" onclick="addToCart('چای زعفران',25000)">۲۵۰۰۰ تومان</span></div>
+    <div class="item"><span>دمنوش دارچین 🍵</span><span class="price" onclick="addToCart('دمنوش دارچین',25000)">۲۵۰۰۰ تومان</span></div>
   </div>
 </div>
 
@@ -229,40 +217,49 @@ for(let i=0;i<30;i++){
 <footer>© 2025 کافه شما</footer>
 
 <script>
-let cart = [];
+  let cart = [];
 
-function addToCart(name, price){
-  cart.push({name, price});
-  document.getElementById("cart-count").textContent = cart.length;
-  renderCart();
-  // انیمیشن پاپ
-  let btns = document.getElementsByClassName('price');
-  for(let b of btns){
-    b.style.transform='scale(1.3)';
-    setTimeout(()=>{b.style.transform='scale(1)';},150);
+  function addToCart(name, price) {
+    cart.push({ name, price });
+    document.getElementById("cart-count").textContent = cart.length;
+    renderCart();
   }
-}
 
-function renderCart(){
-  const cartItems = document.getElementById("cart-items");
-  cartItems.innerHTML = "";
-  cart.forEach(item=>{
-    cartItems.innerHTML+=`<div class="cart-item"><span>${item.name}</span><span>${item.price} تومان</span></div>`;
-  });
-}
+  function renderCart() {
+    const cartItems = document.getElementById("cart-items");
+    cartItems.innerHTML = "";
+    cart.forEach((item) => {
+      cartItems.innerHTML += `
+        <div class="cart-item">
+          <span>${item.name}</span>
+          <span>${item.price} تومان</span>
+        </div>
+      `;
+    });
+  }
 
-function toggleCart(){
-  const modal=document.getElementById("cart-modal");
-  modal.style.display=modal.style.display==='block'?'none':'block';
-}
+  function toggleCart() {
+    const modal = document.getElementById("cart-modal");
+    modal.style.display = modal.style.display === "block" ? "none" : "block";
+  }
 
-function checkout(){
-  alert("خرید شما ثبت شد ✅");
-  cart=[];
-  document.getElementById("cart-count").textContent=0;
-  renderCart();
-  toggleCart();
-}
+  function checkout() {
+    alert("خرید شما ثبت شد ✅");
+    cart = [];
+    document.getElementById("cart-count").textContent = 0;
+    renderCart();
+    toggleCart();
+  }
+
+  // اضافه کردن دانه های قهوه
+  for(let i=0;i<30;i++){
+    let bean = document.createElement('div');
+    bean.classList.add('coffee-bean');
+    bean.style.top = Math.random()*window.innerHeight + 'px';
+    bean.style.left = Math.random()*window.innerWidth + 'px';
+    bean.style.animationDuration = (2 + Math.random()*3) + 's';
+    document.body.appendChild(bean);
+  }
 </script>
 </body>
 </html>
