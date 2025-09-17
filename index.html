@@ -1,256 +1,191 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>منوی کافه </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منوی کافه</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: "Tahoma", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fdfaf6;
+      color: #333;
+      direction: rtl;
+    }
 
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    header {
+      background: linear-gradient(135deg, #3e2723, #6d4c41);
+      color: white;
+      text-align: center;
+      padding: 25px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
 
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
 
-<style>
-body {
-  font-family: 'Vazirmatn', sans-serif;
-  background: #f9f9f9;
-  margin: 0;
-  padding: 0;
-  direction: rtl;
-  color: #333;
-}
+    .menu-section {
+      padding: 40px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
 
-/* Header */
-header {
-  background: #3B9AE1; /* مکمل قهوه‌ای */
-  color: white;
-  padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-header h1 {
-  margin: 0;
-  font-size: 26px;
-  font-weight: 700;
-}
-.header-contact {
-  display: flex;
-  gap: 15px;
-  font-size: 18px;
-  align-items: center;
-}
-.header-contact a {
-  color: white;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-.header-contact a:hover {
-  color: #ffda77;
-  transform: translateY(-3px) scale(1.2);
-}
+    .menu-section h2 {
+      border-bottom: 3px solid #6d4c41;
+      display: inline-block;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+      font-size: 22px;
+      color: #3e2723;
+    }
 
-/* Search bar */
-.search-bar {
-  margin: 20px auto;
-  max-width: 800px;
-  padding: 0 20px;
-  display: flex;
-  justify-content: center;
-}
-.search-bar input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-}
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
 
-/* Categories */
-.categories {
-  text-align: center;
-  margin: 20px 0;
-}
-.categories button {
-  background: #eee;
-  border: none;
-  padding: 10px 20px;
-  margin: 0 5px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-  font-weight: 700;
-}
-.categories button.active, .categories button:hover {
-  background: #6c4f3d;
-  color: white;
-}
+    .menu-item {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.7s ease forwards;
+    }
 
-/* Menu items */
-.menu-section {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 0 20px;
-}
-.menu-item {
-  display: flex;
-  justify-content: space-between;
-  background: rgb(12, 200, 210);
-  margin: 10px 0;
-  padding: 15px 20px;
-  border-radius: 10px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-  align-items: center;
-  transition: all 0.3s ease;
-}
-.menu-item img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-left: 20px;
-}
-.price {
-  font-weight: bold;
-  color: #6c4f3d;
-}
+    .menu-item img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
 
-/* Footer */
-footer {
-  background: #6c4f3d;
-  color: white;
-  text-align: center;
-  padding: 40px 20px;
-  margin-top: 50px;
-}
-footer h2 {
-  margin-bottom: 20px;
-}
-.footer-contact {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  font-size: 18px;
-}
-.footer-contact a {
-  color: white;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-.footer-contact a:hover {
-  color: #ffda77;
-  transform: translateY(-3px) scale(1.2);
-}
-footer p {
-  margin-top: 20px;
-  font-size: 14px;
-}
+    .menu-item div {
+      padding: 15px;
+    }
 
-@media(max-width:600px){
-  .menu-item { flex-direction: column; align-items: flex-start; }
-  .menu-item img { margin-left:0; margin-top:10px; }
-  header { flex-direction: column; align-items:flex-start; gap:10px; }
-}
-@media(max-width:400px){
-  h1 { font-size:22px; }
-  .price { font-size:16px; }
-}
-</style>
+    .menu-item h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: #3e2723;
+    }
+
+    .menu-item p {
+      font-size: 14px;
+      color: #666;
+      margin: 0 0 10px;
+    }
+
+    .menu-item span {
+      font-weight: bold;
+      color: #4caf50;
+    }
+
+    .menu-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    footer {
+      background: #3e2723;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    .footer-contact a {
+      color: #ffc107;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 16px;
+    }
+
+    .footer-contact a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>منوی کافه متین</h1>
+  </header>
 
-<header>
-  <h1>کافه متین</h1>
-  <div class="header-contact">
-    <a href="tel:09152668451"><i class="fas fa-phone"></i> 09152668451</a>
-    <a href="https://instagram.com/yourcafe" target="_blank"><i class="fab fa-instagram"></i> @yourcafe</a>
-  </div>
-</header>
+  <section class="menu-section">
+    <h2>نوشیدنی‌های گرم</h2>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <img src="https://source.unsplash.com/400x300/?coffee" alt="کاپوچینو">
+        <div>
+          <h3>کاپوچینو</h3>
+          <p>قهوه اسپرسو با شیر داغ و کف شیر</p>
+          <span>80,000 تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <img src="https://source.unsplash.com/400x300/?latte" alt="لاته">
+        <div>
+          <h3>لاته</h3>
+          <p>ترکیب اسپرسو با شیر بخار داده شده</p>
+          <span>75,000 تومان</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- Search bar -->
-<div class="search-bar">
-  <input type="text" id="searchInput" placeholder="جستجوی منو...">
-</div>
+  <section class="menu-section">
+    <h2>نوشیدنی‌های سرد</h2>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <img src="https://source.unsplash.com/400x300/?iced-coffee" alt="آیس کافی">
+        <div>
+          <h3>آیس کافی</h3>
+          <p>قهوه خنک با یخ و شیرین‌کننده طبیعی</p>
+          <span>90,000 تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <img src="https://source.unsplash.com/400x300/?milkshake" alt="شیک شکلات">
+        <div>
+          <h3>شیک شکلات</h3>
+          <p>شیر مخلوط با بستنی و شکلات</p>
+          <span>85,000 تومان</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div class="categories">
-  <button class="active" onclick="filterMenu('all', event)">همه</button>
-  <button onclick="filterMenu('hot', event)">نوشیدنی گرم</button>
-  <button onclick="filterMenu('cold', event)">نوشیدنی سرد</button>
-  <button onclick="filterMenu('tea', event)">چای و دمنوش</button>
-  <button onclick="filterMenu('cake', event)">کیک و بستنی</button>
-</div>
+  <footer>
+    <h2>کافه متین</h2>
+    <div class="footer-contact">
+      <a href="tel:09152668451"><i class="fas fa-phone"></i> تماس: 09152668451</a>
+      <a href="https://instagram.com/yourcafe" target="_blank"><i class="fab fa-instagram"></i> @yourcafe</a>
+    </div>
+    <p>تمامی حقوق محفوظ است © 2025</p>
+  </footer>
 
-<div class="menu-section" id="menuSection">
-  <!-- نوشیدنی های گرم -->
-  <div class="menu-item" data-category="hot"><div><h3>اسپرسو</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://www.sunrup.com/wp-content/uploads/2024/01/image3-3.jpg" alt="اسپرسو"></div>
-  <div class="menu-item" data-category="hot"><div><h3>دبل اسپرسو</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://drcoffee.ir/wp-content/uploads/2022/03/doppio-coffee-4-1280x720.jpg" alt="دبل اسپرسو"></div>
-  <div class="menu-item" data-category="hot"><div><h3>قهوه ترک</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://fenjoonet.com/wp-content/uploads/2019/11/istanbul-turkish-coffee.jpg" alt="قهوه ترک"></div>
-  <div class="menu-item" data-category="hot"><div><h3>قهوه فرانسه</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://chishi.ir/wp-content/uploads/2020/12/ghahve-faranse.jpg" alt="قهوه فرانسه"></div>
-  <div class="menu-item" data-category="hot"><div><h3>کاپوچینو</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://www.digikala.com/mag/wp-content/uploads/2025/01/cappuccino-recipe.jpg" alt="کاپوچینو"></div>
-
-  <!-- نوشیدنی های سرد -->
-  <div class="menu-item" data-category="cold"><div><h3>موهیتو</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="	https://fenjoonet.com/wp-content/uploads/2019/04/mojito-fenjoonet.jpg" alt="موهیتو"></div>
-  <div class="menu-item" data-category="cold"><div><h3>آیس تی</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://www.beytoote.com/images/stories/food/prepare1-iced-tea-1.jpg" alt="آیس تی"></div>
-  <div class="menu-item" data-category="cold"><div><h3>دتاکس واتر</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://chishi.ir/wp-content/uploads/2021/04/detaks-water.jpg" alt="دتاکس واتر"></div>
-  <div class="menu-item" data-category="cold"><div><h3>کلد برو</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://coffeetaxi.shop/wp-content/uploads/2024/11/coffeetaxi-bomber-baro-ice-coldbrew-4.jpg" alt="کلد برو"></div>
-  <div class="menu-item" data-category="cold"><div><h3>آیس لاته</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://alis.ir/wp-content/uploads/2021/06/68878cffcc50.jpg" alt=" ایس لاته"></div>
-
-  <!-- چای و دمنوش -->
-  <div class="menu-item" data-category="tea"><div><h3>چای زعفران</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://3mim1.com/Uploads/products_images/257b1872-4caa-48f0-8991-43546b5b5d73.jpg" alt="چای زعفران"></div>
-  <div class="menu-item" data-category="tea"><div><h3>چای بهارنارنج</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://mag.asanteb.com/wp-content/uploads/2016/07/Spring-orange-tea-1.jpg" alt="چای بهارنارنج"></div>
-  <div class="menu-item" data-category="tea"><div><h3>چای عناب</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://www.beytoote.com/images/stories/health/benefits-jujubetea03-3.jpg" alt="چای عناب"></div>
-  <div class="menu-item" data-category="tea"><div><h3>دمنوش به لیمو</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://www.chetor.com/wp-content/uploads/2017/12/91881.jpg" alt="دمنوش به لیمو"></div>
-  <div class="menu-item" data-category="tea"><div><h3>چای با در نجبویه</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="	https://www.ghafaridiet.com/upload/upload/1660477484.jpg" alt="چای با در نجبویه"></div>
-  <div class="menu-item" data-category="tea"><div><h3>دمنوش دارچین</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://arseschef.com/wp-content/uploads/2022/11/02-4.jpg" alt="دمنوش دارچین"></div>
-
-  <!-- کیک و بستنی -->
-  <div class="menu-item" data-category="cake"><div><h3>کیک بستنی</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="	https://www.ghanad-bartar.com/upload/upload/1650871786.jpg" alt="کیک بستنی"></div>
-  <div class="menu-item" data-category="cake"><div><h3>کیک شکلاتی</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="	https://noktechi.ir/wp-content/uploads/2021/09/cake-shokolati.jpg" alt="کیک شکلاتی"></div>
-  <div class="menu-item" data-category="cake"><div><h3>کاپ کیک</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://www.narmilashop.com/wp-content/uploads/2018/06/fo3437.jpg" alt="کاپ کیک"></div>
-  <div class="menu-item" data-category="cake"><div><h3>کیک شارلوت</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="	https://cafimafi.com/mag/wp-content/uploads/2020/05/charlotte-0.jpg" alt="کیک شارلوت"></div>
-  <div class="menu-item" data-category="cake"><div><h3>کیک تیرامیسو</h3></div><span class="price">۲۵۰۰۰ تومان</span><img src="https://chishi.ir/wp-content/uploads/2021/05/chiz-cake-tiramiso.jpg" alt="کیک تیرامیسو"></div>
-</div>
-
-<script>
-function filterMenu(category, event) {
-  const items = document.querySelectorAll('.menu-item');
-  document.querySelectorAll('.categories button').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-  items.forEach(item => {
-    if(category === 'all' || item.dataset.category === category){
-      item.style.display = 'flex';
-    } else {
-      item.style.display = 'none';
-    }
-  });
-}
-
-// جستجوگر منو
-document.getElementById('searchInput').addEventListener('input', function(){
-  const filter = this.value.toLowerCase();
-  document.querySelectorAll('.menu-item').forEach(item => {
-    const text = item.querySelector('h3').innerText.toLowerCase();
-    item.style.display = text.includes(filter) ? 'flex' : 'none';
-  });
-});
-</script>
-
-<footer>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-</footer>
-
+  <script>
+    // انیمیشن ورود آیتم‌ها با تاخیر
+    document.addEventListener("DOMContentLoaded", () => {
+      const items = document.querySelectorAll(".menu-item");
+      items.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.2}s`;
+      });
+    });
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
