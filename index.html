@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* style.css */
+        /* CSS for a more attractive and engaging menu */
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
 
         body {
@@ -45,10 +45,25 @@
             cursor: pointer;
             font-size: 28px;
             transition: transform 0.2s ease-in-out;
+            animation: bounceIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;
         }
 
         .cart-icon:hover {
-            transform: scale(1.1);
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .cart-icon.added-item {
+            animation: pulse 0.6s infinite alternate;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
 
         .cart-count {
@@ -62,6 +77,12 @@
             border-radius: 50%;
             min-width: 20px;
             text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .cart-count.visible {
+            opacity: 1;
         }
 
         .menu {
@@ -84,6 +105,7 @@
             position: relative;
             z-index: 1;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-out;
         }
 
         .card:hover {
@@ -107,6 +129,7 @@
             transition: background-color 0.2s;
             padding: 8px;
             border-radius: 8px;
+            cursor: pointer;
         }
 
         .item:hover {
@@ -114,14 +137,9 @@
         }
 
         .item-name {
-            cursor: pointer;
-            transition: color 0.2s;
             font-size: 18px;
             font-weight: bold;
-        }
-
-        .item-name:hover {
-            color: #d2691e;
+            color: #3b2f2f;
         }
 
         .price {
@@ -130,7 +148,6 @@
             padding: 8px 12px;
             border-radius: 15px;
             font-size: 16px;
-            cursor: pointer;
             transition: all 0.3s;
         }
 
@@ -301,9 +318,25 @@
             font-weight: bold;
             text-align: left;
         }
+        
+        .checkout-btn {
+            background: #27ae60;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
 
-        /* دکمه "ثبت خرید" حذف شده است */
-        /* .checkout-btn { ... } */
+        .checkout-btn:hover {
+            background: #2ecc71;
+            transform: scale(1.02);
+        }
 
         footer {
             text-align: center;
@@ -336,8 +369,8 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 768px) {
@@ -389,12 +422,13 @@
         <h3>سبد خرید</h3>
         <div id="cart-items"></div>
         <div class="total-price" id="total-price">مبلغ کل: ۰ تومان</div>
-        </div>
+        <button class="checkout-btn" onclick="checkout()">ثبت خرید ✅</button>
+    </div>
 
     <footer>© ۲۰۲۵ کافه دلنشین - همه حقوق محفوظ است.</footer>
     
     <script>
-        /* script.js */
+        // JavaScript for a more interactive menu
         const menuData = {
             'نوشیدنی های گرم': [
                 { name: 'اسپرسو', price: 35000, desc: 'شات کوچکی از قهوه غلیظ و معطر، پایه اصلی تمام قهوه‌های ما.', image: 'https://images.unsplash.com/photo-1579992323868-b7c4d57c21c7?auto=format&fit=crop&w=400&q=80' },
@@ -427,9 +461,10 @@
                 menuData[category].forEach(item => {
                     const itemDiv = document.createElement('div');
                     itemDiv.classList.add('item');
+                    itemDiv.setAttribute('data-item-name', item.name);
                     itemDiv.innerHTML = `
-                        <span class="item-name" data-item-name="${item.name}">${item.name}</span>
-                        <span class="price" data-item-name="${item.name}">${item.price.toLocaleString()} تومان</span>
+                        <span class="item-name">${item.name}</span>
+                        <span class="price">${item.price.toLocaleString()} تومان</span>
                     `;
                     card.appendChild(itemDiv);
                 });
@@ -448,12 +483,20 @@
                 cart.push({ ...item, quantity: 1 });
             }
             updateCartDisplay();
+
+            // Add visual feedback
+            const cartIcon = document.querySelector('.cart-icon');
+            cartIcon.classList.add('added-item');
+            setTimeout(() => {
+                cartIcon.classList.remove('added-item');
+            }, 600);
         }
 
         function showItemDetails(event) {
-            const itemName = event.target.dataset.itemName;
-            if (!itemName) return;
-
+            const itemElement = event.target.closest('.item');
+            if (!itemElement) return;
+            const itemName = itemElement.dataset.itemName;
+            
             const item = Object.values(menuData).flat().find(i => i.name === itemName);
             if (!item) return;
 
@@ -499,7 +542,9 @@
                 `;
             });
 
-            cartCountSpan.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountSpan.textContent = totalItems;
+            cartCountSpan.classList.toggle('visible', totalItems > 0);
             totalPriceDiv.textContent = `مبلغ کل: ${total.toLocaleString()} تومان`;
         }
 
@@ -516,9 +561,18 @@
             const modal = document.getElementById("cart-modal");
             modal.classList.toggle('open');
         }
-        
-        // تابع checkout به طور کامل حذف شده است
-        
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("سبد خرید شما خالی است.");
+                return;
+            }
+            alert("خرید شما با موفقیت ثبت شد. از انتخاب شما سپاسگزاریم! ✅");
+            cart = [];
+            updateCartDisplay();
+            toggleCart();
+        }
+
         function createCoffeeBeans() {
             for(let i = 0; i < 30; i++){
                 let bean = document.createElement('div');
@@ -534,11 +588,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderMenu();
             createCoffeeBeans();
-            document.getElementById('menu-container').addEventListener('click', (event) => {
-                if (event.target.classList.contains('item-name') || event.target.classList.contains('price')) {
-                    showItemDetails(event);
-                }
-            });
+            document.getElementById('menu-container').addEventListener('click', showItemDetails);
         });
     </script>
 </body>
