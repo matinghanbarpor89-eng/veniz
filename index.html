@@ -302,24 +302,8 @@
             text-align: left;
         }
 
-        .checkout-btn {
-            background: #27ae60;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            width: 100%;
-            margin-top: 20px;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .checkout-btn:hover {
-            background: #2ecc71;
-            transform: scale(1.02);
-        }
+        /* دکمه "ثبت خرید" حذف شده است */
+        /* .checkout-btn { ... } */
 
         footer {
             text-align: center;
@@ -405,8 +389,7 @@
         <h3>سبد خرید</h3>
         <div id="cart-items"></div>
         <div class="total-price" id="total-price">مبلغ کل: ۰ تومان</div>
-        <button class="checkout-btn" onclick="checkout()">ثبت خرید ✅</button>
-    </div>
+        </div>
 
     <footer>© ۲۰۲۵ کافه دلنشین - همه حقوق محفوظ است.</footer>
     
@@ -533,18 +516,9 @@
             const modal = document.getElementById("cart-modal");
             modal.classList.toggle('open');
         }
-
-        function checkout() {
-            if (cart.length === 0) {
-                alert("سبد خرید شما خالی است.");
-                return;
-            }
-            alert("خرید شما با موفقیت ثبت شد. از انتخاب شما سپاسگزاریم! ✅");
-            cart = [];
-            updateCartDisplay();
-            toggleCart();
-        }
-
+        
+        // تابع checkout به طور کامل حذف شده است
+        
         function createCoffeeBeans() {
             for(let i = 0; i < 30; i++){
                 let bean = document.createElement('div');
