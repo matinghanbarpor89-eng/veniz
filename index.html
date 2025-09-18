@@ -1,354 +1,574 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>منوی کافه</title>
-<style>
-  body {
-    margin: 0;
-    font-family: 'Vazirmatn', sans-serif;
-    background: url('https://cdn.ghasedak24.com/mag/wp-content/uploads/2024/04/Ensan-cafe-in-qazvin.webp') no-repeat center center fixed;
-    background-size: cover;
-    color: #3b2f2f;
-    overflow-x: hidden;
-    position: relative;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منوی کافه دلنشین</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* style.css */
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
 
-  header {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(8px);
-    padding: 15px 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 22px;
-    font-weight: bold;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    color: #3b2f2f;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-  }
+        body {
+            margin: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            background: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #3b2f2f;
+            overflow-x: hidden;
+            position: relative;
+            direction: rtl;
+        }
 
-  .cart-icon {
-    position: relative;
-    cursor: pointer;
-    font-size: 24px;
-    transition: transform 0.3s;
-  }
+        header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            color: #6b4c3e;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-  .cart-icon:hover {
-    transform: scale(1.2);
-  }
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 28px;
+            transition: transform 0.2s ease-in-out;
+        }
 
-  .cart-count {
-    position: absolute;
-    top: -8px;
-    right: -10px;
-    background: #ff6347;
-    color: white;
-    font-size: 12px;
-    padding: 2px 6px;
-    border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  }
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
 
-  .menu {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 25px;
-    padding: 25px;
-    z-index: 1;
-    position: relative;
-  }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: #e74c3c;
+            color: white;
+            font-size: 14px;
+            padding: 3px 8px;
+            border-radius: 50%;
+            min-width: 20px;
+            text-align: center;
+        }
 
-  .card {
-    background: rgba(255, 248, 240, 0.9);
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
-    color: #3b2f2f;
-    backdrop-filter: blur(6px);
-    transition: transform 0.4s, box-shadow 0.4s, opacity 0.6s;
-    position: relative;
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(30px);
-  }
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px;
+            z-index: 1;
+            position: relative;
+        }
 
-  .card.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
+        .card {
+            background: rgba(255, 248, 240, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            color: #3b2f2f;
+            backdrop-filter: blur(5px);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
-  .card:hover {
-    transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.35);
-  }
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
+        }
 
-  .card h3 {
-    margin-bottom: 12px;
-    color: #8b4513;
-    border-bottom: 2px solid #d2691e;
-    padding-bottom: 5px;
-  }
+        .card h3 {
+            margin-bottom: 20px;
+            color: #8b4513;
+            font-size: 22px;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 10px;
+        }
 
-  .item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px 0;
-    padding: 5px 0;
-    border-radius: 10px;
-    transition: background 0.3s;
-    cursor: pointer;
-  }
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            transition: background-color 0.2s;
+            padding: 8px;
+            border-radius: 8px;
+        }
 
-  .item:hover {
-    background: rgba(255, 200, 150, 0.15);
-  }
+        .item:hover {
+            background-color: rgba(255, 248, 240, 0.5);
+        }
 
-  .price {
-    background: #d2691e;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: bold;
-    transition: all 0.3s;
-  }
+        .item-name {
+            cursor: pointer;
+            transition: color 0.2s;
+            font-size: 18px;
+            font-weight: bold;
+        }
 
-  .price:hover {
-    transform: scale(1.15);
-    background: #ff7f50;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-  }
+        .item-name:hover {
+            color: #d2691e;
+        }
 
-  .cart-modal {
-    display: none;
-    position: fixed;
-    top: 70px;
-    right: 20px;
-    width: 350px;
-    max-height: 70vh;
-    overflow-y: auto;
-    background: rgba(255, 248, 240, 0.97);
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-    z-index: 20;
-    color: #3b2f2f;
-    backdrop-filter: blur(8px);
-    transform: translateY(-20px);
-    transition: all 0.4s;
-  }
+        .price {
+            background: #d2691e;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
 
-  .cart-modal.show {
-    display: block;
-    transform: translateY(0);
-  }
+        .price:hover {
+            transform: scale(1.1);
+            background: #ff7f50;
+        }
 
-  .cart-modal h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #8b4513;
-    font-size: 20px;
-    border-bottom: 2px solid #d2691e;
-    padding-bottom: 5px;
-  }
+        .item-modal {
+            display: none;
+            position: fixed;
+            z-index: 30;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
 
-  .cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 8px 0;
-    font-size: 15px;
-    padding: 4px 0;
-    border-bottom: 1px dashed #d2691e;
-  }
+        .item-modal-content {
+            background: #fff8f0;
+            padding: 30px;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
+        }
 
-  .cart-item button {
-    display: none; /* حذف دکمه حذف */
-  }
+        .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            left: 25px;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-  footer {
-    text-align: center;
-    background: rgba(255, 255, 255, 0.85);
-    padding: 12px;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    color: #3b2f2f;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 -3px 10px rgba(0,0,0,0.2);
-  }
+        .close-btn:hover, .close-btn:focus {
+            color: #d2691e;
+        }
 
-  footer a {
-    text-decoration: none;
-    color: #8b0000;
-    font-weight: bold;
-    margin: 0 6px;
-    transition: color 0.3s;
-  }
+        .item-modal-content img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
 
-  footer a:hover {
-    color: #ff4500;
-  }
+        .item-modal-content h3 {
+            font-size: 28px;
+            color: #8b4513;
+        }
 
-  .coffee-bean {
-    position: absolute;
-    width: 12px;
-    height: 8px;
-    background: #4b2e2e;
-    border-radius: 50%;
-    animation: floatBean linear infinite;
-    pointer-events: none;
-    z-index: 2;
-  }
+        .item-modal-content p {
+            font-size: 18px;
+            color: #5d4037;
+            margin-bottom: 20px;
+        }
 
-  @keyframes floatBean {
-    0% { transform: translateY(0) translateX(0) rotate(0deg); }
-    50% { transform: translateY(-25px) translateX(15px) rotate(180deg); }
-    100% { transform: translateY(0) translateX(0) rotate(360deg); }
-  }
+        .modal-add-btn {
+            background: #8b4513;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
 
-  /* افکت پرواز کارت به سبد */
-  .flying-item {
-    position: absolute;
-    z-index: 1000;
-    pointer-events: none;
-    transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.8s;
-    background: #d2691e;
-    color: white;
-    border-radius: 8px;
-    padding: 4px 8px;
-    font-weight: bold;
-  }
-</style>
+        .modal-add-btn:hover {
+            background: #d2691e;
+            transform: translateY(-3px);
+        }
+
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 320px;
+            background: rgba(255, 248, 240, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            z-index: 20;
+            color: #3b2f2f;
+            backdrop-filter: blur(8px);
+            transition: all 0.4s ease-in-out;
+            transform: translateX(120%);
+        }
+
+        .cart-modal.open {
+            display: block;
+            transform: translateX(0);
+        }
+
+        .cart-modal h3 {
+            margin-top: 0;
+            color: #8b4513;
+            border-bottom: 1px solid #d2691e;
+            padding-bottom: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 16px;
+            border-bottom: 1px dotted #ccc;
+            padding-bottom: 10px;
+        }
+
+        .cart-item-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+        }
+
+        .cart-item-price {
+            font-size: 14px;
+            color: #8b4513;
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            background: #d2691e;
+            color: white;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .quantity-btn:hover {
+            background: #e74c3c;
+        }
+
+        .item-quantity {
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .total-price {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .checkout-btn {
+            background: #27ae60;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: #2ecc71;
+            transform: scale(1.02);
+        }
+
+        footer {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 12px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            color: #3b2f2f;
+            backdrop-filter: blur(8px);
+            z-index: 5;
+        }
+
+        .coffee-bean {
+            position: absolute;
+            width: 12px;
+            height: 8px;
+            background: #4b2e2e;
+            border-radius: 50%;
+            animation: floatBean linear infinite;
+            pointer-events: none;
+            opacity: 0.5;
+            z-index: 2;
+        }
+
+        @keyframes floatBean {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.5; }
+            50% { transform: translateY(-30px) translateX(15px) rotate(180deg); opacity: 0.8; }
+            100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.5; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            header {
+                font-size: 20px;
+            }
+
+            .cart-modal {
+                width: 90%;
+                right: 5%;
+                top: 60px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<audio id="click-sound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
-
-<header>
-  <span>منوی کافه ☕</span>
-  <div class="cart-icon" onclick="toggleCart()">
-    🛒
-    <span class="cart-count" id="cart-count">0</span>
-  </div>
-</header>
-
-<div class="menu" id="menu">
-  <div class="card">
-    <h3>نوشیدنی های گرم</h3>
-    <div class="item"><span>اسپرسو ☕</span><span class="price" onclick="addToCart('اسپرسو',25000,event)">۲۵۰۰۰ تومان</span></div>
-    <div class="item"><span>دوپیو ☕</span><span class="price" onclick="addToCart('دوپیو',25000,event)">۲۵۰۰۰ تومان</span></div>
-    <div class="item"><span>قهوه ترک ☕</span><span class="price" onclick="addToCart('قهوه ترک',25000,event)">۲۵۰۰۰ تومان</span></div>
-  </div>
-
-  <div class="card">
-    <h3>نوشیدنی های سرد</h3>
-    <div class="item"><span>آیس لاته 🥤</span><span class="price" onclick="addToCart('آیس لاته',25000,event)">۲۵۰۰۰ تومان</span></div>
-    <div class="item"><span>موهیتو 🥤</span><span class="price" onclick="addToCart('موهیتو',25000,event)">۲۵۰۰۰ تومان</span></div>
-    <div class="item"><span>آیس تی 🥤</span><span class="price" onclick="addToCart('آیس تی',25000,event)">۲۵۰۰۰ تومان</span></div>
-  </div>
-
-  <div class="card">
-    <h3>کیک و دمنوش</h3>
-    <div class="item"><span>کیک شکلاتی 🍰</span><span class="price" onclick="addToCart('کیک شکلاتی',25000,event)">۲۵۰۰۰ تومان</span></div>
-    <div class="item"><span>چای زعفران 🍵</span><span class="price" onclick="addToCart('چای زعفران',25000,event)">۲۵۰۰۰ تومان</span></div>
-    <div class="item"><span>دمنوش دارچین 🍵</span><span class="price" onclick="addToCart('دمنوش دارچین',25000,event)">۲۵۰۰۰ تومان</span></div>
-  </div>
-</div>
-
-<div class="cart-modal" id="cart-modal">
-  <h3>سبد خرید</h3>
-  <div id="cart-items"></div>
-</div>
-
-<footer>
-  <p>© 2025 کافه شما</p>
-  <p>
-    📞 <a href="tel:+989123456789">0912-345-6789</a> |
-    📸 <a href="https://instagram.com/yourcafe" target="_blank">اینستاگرام</a>
-  </p>
-</footer>
-
-<script>
-  let cart = [];
-  const clickSound = document.getElementById('click-sound');
-
-  function addToCart(name, price, event) {
-    cart.push({ name, price });
-    document.getElementById("cart-count").textContent = cart.length;
-    renderCart();
-    clickSound.currentTime = 0;
-    clickSound.play();
-
-    // افکت پرواز کارت
-    const priceEl = event.target;
-    const rect = priceEl.getBoundingClientRect();
-    const flyingItem = document.createElement('div');
-    flyingItem.className = 'flying-item';
-    flyingItem.textContent = priceEl.previousElementSibling.textContent;
-    flyingItem.style.top = rect.top + 'px';
-    flyingItem.style.left = rect.left + 'px';
-
-    document.body.appendChild(flyingItem);
-
-    const cartIcon = document.querySelector('.cart-icon');
-    const cartRect = cartIcon.getBoundingClientRect();
-
-    setTimeout(() => {
-      flyingItem.style.transform = `translate(${cartRect.left - rect.left}px, ${cartRect.top - rect.top}px) scale(0.2)`;
-      flyingItem.style.opacity = '0';
-    }, 10);
-
-    setTimeout(() => {
-      flyingItem.remove();
-    }, 900);
-  }
-
-  function renderCart() {
-    const cartItems = document.getElementById("cart-items");
-    cartItems.innerHTML = "";
-    cart.forEach(item => {
-      cartItems.innerHTML += `
-        <div class="cart-item">
-          <span>${item.name}</span>
-          <span>${item.price} تومان</span>
+    <header>
+        <span>کافه دلنشین ☕</span>
+        <div class="cart-icon" onclick="toggleCart()">
+            🛒
+            <span class="cart-count" id="cart-count">0</span>
         </div>
-      `;
-    });
-  }
+    </header>
 
-  function toggleCart() {
-    const modal = document.getElementById("cart-modal");
-    modal.classList.toggle("show");
-  }
+    <div class="menu" id="menu-container">
+        </div>
 
-  // انیمیشن کارت‌ها هنگام ورود
-  window.addEventListener('load', () => {
-    const cards = document.querySelectorAll('.card');
-    cards.forEach((card, i) => {
-      setTimeout(() => {
-        card.classList.add('show');
-      }, i*150);
-    });
-  });
+    <div id="item-modal" class="item-modal">
+        <div class="item-modal-content">
+            <span class="close-btn" onclick="closeItemDetails()">&times;</span>
+            <img id="modal-image" src="" alt="Item Image">
+            <h3 id="modal-title"></h3>
+            <p id="modal-description"></p>
+            <button class="modal-add-btn" id="modal-add-btn">افزودن به سبد</button>
+        </div>
+    </div>
 
-  // دانه های قهوه
-  for(let i=0;i<30;i++){
-    let bean = document.createElement('div');
-    bean.classList.add('coffee-bean');
-    bean.style.top = Math.random()*window.innerHeight + 'px';
-    bean.style.left = Math.random()*window.innerWidth + 'px';
-    bean.style.animationDuration = (2 + Math.random()*3) + 's';
-    document.body.appendChild(bean);
-  }
-</script>
+    <div class="cart-modal" id="cart-modal">
+        <h3>سبد خرید</h3>
+        <div id="cart-items"></div>
+        <div class="total-price" id="total-price">مبلغ کل: ۰ تومان</div>
+        <button class="checkout-btn" onclick="checkout()">ثبت خرید ✅</button>
+    </div>
+
+    <footer>© ۲۰۲۵ کافه دلنشین - همه حقوق محفوظ است.</footer>
+    
+    <script>
+        /* script.js */
+        const menuData = {
+            'نوشیدنی های گرم': [
+                { name: 'اسپرسو', price: 35000, desc: 'شات کوچکی از قهوه غلیظ و معطر، پایه اصلی تمام قهوه‌های ما.', image: 'https://images.unsplash.com/photo-1579992323868-b7c4d57c21c7?auto=format&fit=crop&w=400&q=80' },
+                { name: 'لته', price: 45000, desc: 'ترکیبی از شیر داغ، فوم شیر و یک شات اسپرسو، با نقشی زیبا روی آن.', image: 'https://images.unsplash.com/photo-1525164016739-9d0426f0750a?auto=format&fit=crop&w=400&q=80' },
+                { name: 'قهوه ترک', price: 30000, desc: 'قهوه‌ای سنتی و غلیظ، با عطری دلپذیر و طعمی ماندگار.', image: 'https://images.unsplash.com/photo-1502447938367-96a1a1c4b574?auto=format&fit=crop&w=400&q=80' }
+            ],
+            'نوشیدنی های سرد': [
+                { name: 'آیس لاته', price: 50000, desc: 'لته خنک با یخ، نوشیدنی عالی برای روزهای گرم.', image: 'https://images.unsplash.com/photo-1541315609328-9173079f8c6b?auto=format&fit=crop&w=400&q=80' },
+                { name: 'موهیتو', price: 40000, desc: 'ترکیبی از نعناع تازه، لیمو، شکر و سودا، فوق‌العاده باطراوت.', image: 'https://images.unsplash.com/photo-1549488344-933e140d348a?auto=format&fit=crop&w=400&q=80' },
+                { name: 'آیس تی', price: 35000, desc: 'چای سرد با طعم لیمو و هلو، خنک و گوارا.', image: 'https://images.unsplash.com/photo-1563840742517-5e1654160408?auto=format&fit=crop&w=400&q=80' }
+            ],
+            'کیک و دسر': [
+                { name: 'کیک شکلاتی', price: 55000, desc: 'کیکی غنی و شکلاتی با گاناش، یک انتخاب عالی برای عاشقان شکلات.', image: 'https://images.unsplash.com/photo-1577908906567-980753d0e9a5?auto=format&fit=crop&w=400&q=80' },
+                { name: 'چیزکیک نیویورکی', price: 60000, desc: 'چیزکیکی کلاسیک با بافتی نرم و خامه‌ای، رویه‌ای طلایی و طعمی فراموش‌نشدنی.', image: 'https://images.unsplash.com/photo-1565551322285-d6023253b070?auto=format&fit=crop&w=400&q=80' },
+                { name: 'وافل بستنی', price: 70000, desc: 'وافل تازه و ترد با یک اسکوپ بستنی و سس شکلات.', image: 'https://images.unsplash.com/photo-1587630713500-619f5630d705?auto=format&fit=crop&w=400&q=80' }
+            ]
+        };
+
+        let cart = [];
+
+        function renderMenu() {
+            const menuContainer = document.getElementById('menu-container');
+            menuContainer.innerHTML = '';
+
+            for (const category in menuData) {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `<h3>${category}</h3>`;
+
+                menuData[category].forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add('item');
+                    itemDiv.innerHTML = `
+                        <span class="item-name" data-item-name="${item.name}">${item.name}</span>
+                        <span class="price" data-item-name="${item.name}">${item.price.toLocaleString()} تومان</span>
+                    `;
+                    card.appendChild(itemDiv);
+                });
+                menuContainer.appendChild(card);
+            }
+        }
+
+        function addToCart(name) {
+            const item = Object.values(menuData).flat().find(i => i.name === name);
+            if (!item) return;
+
+            const existingItem = cart.find(cartItem => cartItem.name === name);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...item, quantity: 1 });
+            }
+            updateCartDisplay();
+        }
+
+        function showItemDetails(event) {
+            const itemName = event.target.dataset.itemName;
+            if (!itemName) return;
+
+            const item = Object.values(menuData).flat().find(i => i.name === itemName);
+            if (!item) return;
+
+            const modal = document.getElementById("item-modal");
+            document.getElementById("modal-title").textContent = item.name;
+            document.getElementById("modal-image").src = item.image;
+            document.getElementById("modal-description").textContent = item.desc;
+            
+            const addButton = document.getElementById("modal-add-btn");
+            addButton.onclick = () => {
+                addToCart(item.name);
+                closeItemDetails();
+            };
+            modal.style.display = "flex";
+        }
+
+        function closeItemDetails() {
+            document.getElementById("item-modal").style.display = "none";
+        }
+
+        function updateCartDisplay() {
+            const cartItemsDiv = document.getElementById("cart-items");
+            const cartCountSpan = document.getElementById("cart-count");
+            const totalPriceDiv = document.getElementById("total-price");
+            
+            cartItemsDiv.innerHTML = "";
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price * item.quantity;
+                cartItemsDiv.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <span class="cart-item-name">${item.name}</span>
+                            <span class="cart-item-price">${item.price.toLocaleString()} تومان</span>
+                        </div>
+                        <div class="item-controls">
+                            <button class="quantity-btn" onclick="changeQuantity(${index}, 1)">+</button>
+                            <span class="item-quantity">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="changeQuantity(${index}, -1)">-</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            cartCountSpan.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            totalPriceDiv.textContent = `مبلغ کل: ${total.toLocaleString()} تومان`;
+        }
+
+        function changeQuantity(index, change) {
+            const item = cart[index];
+            item.quantity += change;
+            if (item.quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartDisplay();
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById("cart-modal");
+            modal.classList.toggle('open');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("سبد خرید شما خالی است.");
+                return;
+            }
+            alert("خرید شما با موفقیت ثبت شد. از انتخاب شما سپاسگزاریم! ✅");
+            cart = [];
+            updateCartDisplay();
+            toggleCart();
+        }
+
+        function createCoffeeBeans() {
+            for(let i = 0; i < 30; i++){
+                let bean = document.createElement('div');
+                bean.classList.add('coffee-bean');
+                bean.style.top = Math.random() * 100 + '%';
+                bean.style.left = Math.random() * 100 + '%';
+                bean.style.animationDuration = (2 + Math.random() * 4) + 's';
+                bean.style.animationDelay = (Math.random() * 2) + 's';
+                document.body.appendChild(bean);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMenu();
+            createCoffeeBeans();
+            document.getElementById('menu-container').addEventListener('click', (event) => {
+                if (event.target.classList.contains('item-name') || event.target.classList.contains('price')) {
+                    showItemDetails(event);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+
 
 
