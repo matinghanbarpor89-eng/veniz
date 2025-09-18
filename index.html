@@ -7,53 +7,91 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* CSS for a more attractive and engaging menu */
-        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+        /* Global Styles */
+        :root {
+            --primary-color: #8B4513; /* SaddleBrown */
+            --secondary-color: #D2691E; /* Chocolate */
+            --accent-color: #FF7F50;   /* Coral */
+            --text-color-dark: #3b2f2f;
+            --text-color-light: #fff;
+            --bg-light: #fff8f0;       /* Off-white/Cream */
+            --bg-dark-transparent: rgba(0, 0, 0, 0.6);
+            --card-bg-transparent: rgba(255, 248, 240, 0.95);
+            --header-footer-bg-transparent: rgba(255, 255, 255, 0.9);
+        }
 
         body {
             margin: 0;
             font-family: 'Vazirmatn', sans-serif;
             background: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
             background-size: cover;
-            color: #3b2f2f;
+            color: var(--text-color-dark);
             overflow-x: hidden;
             position: relative;
             direction: rtl;
+            min-height: 100vh;
         }
 
+        /* Custom Scrollbar for better aesthetics */
+        body::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: var(--bg-light);
+            border-radius: 10px;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            border: 3px solid var(--bg-light);
+        }
+
+        /* Header */
         header {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            padding: 15px;
+            background: var(--header-footer-bg-transparent);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 28px;
+            font-weight: 800;
             position: sticky;
             top: 0;
             z-index: 10;
-            color: #6b4c3e;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: var(--primary-color);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
         }
 
         .cart-icon {
             position: relative;
             cursor: pointer;
-            font-size: 28px;
-            transition: transform 0.2s ease-in-out;
-            animation: bounceIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;
+            font-size: 32px;
+            transition: transform 0.3s ease-in-out;
+            animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;
+            color: var(--secondary-color);
         }
 
         .cart-icon:hover {
-            transform: scale(1.2) rotate(10deg);
+            transform: scale(1.3) rotate(15deg);
         }
 
         .cart-icon.added-item {
-            animation: pulse 0.6s infinite alternate;
+            animation: cartDance 0.8s ease-in-out;
+        }
+
+        @keyframes cartDance {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-10deg); }
+            50% { transform: scale(1.3) rotate(10deg); }
+            75% { transform: scale(1.1) rotate(-5deg); }
         }
 
         @keyframes bounceIn {
@@ -61,193 +99,271 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
-        }
-
         .cart-count {
             position: absolute;
-            top: -8px;
-            right: -10px;
+            top: -10px;
+            right: -12px;
             background: #e74c3c;
-            color: white;
-            font-size: 14px;
-            padding: 3px 8px;
+            color: var(--text-color-light);
+            font-size: 15px;
+            padding: 4px 9px;
             border-radius: 50%;
-            min-width: 20px;
+            min-width: 24px;
             text-align: center;
             opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            transform: scale(0.8);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-weight: bold;
         }
 
         .cart-count.visible {
             opacity: 1;
+            transform: scale(1);
         }
 
+        /* Menu Section */
         .menu {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            padding: 50px;
             z-index: 1;
             position: relative;
         }
 
+        /* Menu Card Styles */
         .card {
-            background: rgba(255, 248, 240, 0.9);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            color: #3b2f2f;
-            backdrop-filter: blur(5px);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: var(--card-bg-transparent);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            color: var(--text-color-dark);
+            backdrop-filter: blur(8px);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
             z-index: 1;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            animation: fadeIn 1s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            animation: cardEntrance 1s ease-out forwards;
+            opacity: 0;
+            transform: rotateY(90deg) scale(0.8);
+            transform-origin: center;
         }
 
         .card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-color);
         }
 
         .card h3 {
-            margin-bottom: 20px;
-            color: #8b4513;
-            font-size: 22px;
-            border-bottom: 2px solid #8b4513;
-            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+            font-size: 26px;
+            font-weight: 800;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 12px;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.08);
         }
 
         .item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 15px 0;
-            transition: background-color 0.2s;
-            padding: 8px;
-            border-radius: 8px;
+            margin: 18px 0;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            padding: 10px 15px;
+            border-radius: 12px;
             cursor: pointer;
+            border: 1px solid transparent;
+            animation: itemFadeIn 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .item:hover {
-            background-color: rgba(255, 248, 240, 0.5);
+            background-color: rgba(255, 248, 240, 0.6);
+            border-color: var(--accent-color);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .item-name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #3b2f2f;
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--text-color-dark);
+            transition: color 0.3s;
+        }
+
+        .item:hover .item-name {
+            color: var(--secondary-color);
         }
 
         .price {
-            background: #d2691e;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 15px;
-            font-size: 16px;
-            transition: all 0.3s;
+            background: var(--secondary-color);
+            color: var(--text-color-light);
+            padding: 9px 16px;
+            border-radius: 20px;
+            font-size: 17px;
+            font-weight: bold;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
-        .price:hover {
-            transform: scale(1.1);
-            background: #ff7f50;
+        .item:hover .price {
+            transform: scale(1.15) rotate(2deg);
+            background: var(--accent-color);
         }
 
+        /* Item Modal Styles */
         .item-modal {
             display: none;
             position: fixed;
-            z-index: 30;
+            z-index: 50;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
+            background-color: var(--bg-dark-transparent);
+            backdrop-filter: blur(12px);
             justify-content: center;
             align-items: center;
+            overflow-y: auto;
         }
 
         .item-modal-content {
-            background: #fff8f0;
-            padding: 30px;
-            border-radius: 20px;
-            width: 80%;
-            max-width: 600px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background: var(--bg-light);
+            padding: 40px;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 650px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
             position: relative;
             text-align: center;
-            animation: fadeIn 0.3s ease-out;
+            animation: modalFadeIn 0.4s ease-out forwards;
+            border: 2px solid var(--primary-color);
+            box-sizing: border-box;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .item-modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .item-modal-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .item-modal-content::-webkit-scrollbar-thumb {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            border: 2px solid var(--bg-light);
         }
 
         .close-btn {
             color: #aaa;
             position: absolute;
-            top: 15px;
-            left: 25px;
-            font-size: 30px;
+            top: 20px;
+            left: 30px;
+            font-size: 35px;
             font-weight: bold;
             cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
         }
 
         .close-btn:hover, .close-btn:focus {
-            color: #d2691e;
+            color: var(--accent-color);
+            transform: rotate(90deg);
         }
 
         .item-modal-content img {
             width: 100%;
-            max-height: 300px;
+            max-height: 350px;
             object-fit: cover;
-            border-radius: 15px;
-            margin-bottom: 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+            animation: imgScaleIn 0.5s ease-out;
+            border: 3px solid var(--secondary-color);
+        }
+
+        .item-modal-content img:hover {
+            transform: scale(1.02);
         }
 
         .item-modal-content h3 {
-            font-size: 28px;
-            color: #8b4513;
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 800;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
         .item-modal-content p {
-            font-size: 18px;
+            font-size: 19px;
             color: #5d4037;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            line-height: 1.6;
         }
 
         .modal-add-btn {
-            background: #8b4513;
-            color: white;
-            padding: 12px 25px;
+            background: var(--primary-color);
+            color: var(--text-color-light);
+            padding: 15px 35px;
             border: none;
-            border-radius: 15px;
+            border-radius: 30px;
             cursor: pointer;
-            font-size: 18px;
-            transition: all 0.3s;
-            margin-top: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .modal-add-btn:hover {
-            background: #d2691e;
-            transform: translateY(-3px);
+            background: var(--accent-color);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
+        /* Cart Modal Styles */
         .cart-modal {
             display: none;
             position: fixed;
-            top: 80px;
-            right: 20px;
-            width: 320px;
-            background: rgba(255, 248, 240, 0.95);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            z-index: 20;
-            color: #3b2f2f;
-            backdrop-filter: blur(8px);
-            transition: all 0.4s ease-in-out;
+            top: 90px;
+            right: 25px;
+            width: 350px;
+            background: var(--card-bg-transparent);
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 40;
+            color: var(--text-color-dark);
+            backdrop-filter: blur(10px);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
             transform: translateX(120%);
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .cart-modal::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .cart-modal::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .cart-modal::-webkit-scrollbar-thumb {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            border: 2px solid var(--card-bg-transparent);
         }
 
         .cart-modal.open {
@@ -257,33 +373,50 @@
 
         .cart-modal h3 {
             margin-top: 0;
-            color: #8b4513;
-            border-bottom: 1px solid #d2691e;
-            padding-bottom: 10px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 800;
         }
 
         .cart-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 10px 0;
-            font-size: 16px;
-            border-bottom: 1px dotted #ccc;
-            padding-bottom: 10px;
+            margin: 12px 0;
+            font-size: 17px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item:hover {
+            background-color: rgba(0,0,0,0.03);
+            border-radius: 8px;
+            padding-left: 5px;
+            padding-right: 5px;
         }
 
         .cart-item-info {
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
         }
 
         .cart-item-name {
-            font-weight: bold;
+            font-weight: 700;
+            margin-bottom: 3px;
         }
 
         .cart-item-price {
-            font-size: 14px;
-            color: #8b4513;
+            font-size: 15px;
+            color: var(--primary-color);
         }
 
         .item-controls {
@@ -292,97 +425,281 @@
         }
 
         .quantity-btn {
-            background: #d2691e;
-            color: white;
+            background: var(--secondary-color);
+            color: var(--text-color-light);
             border: none;
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             cursor: pointer;
             font-weight: bold;
-            transition: background-color 0.2s;
+            font-size: 18px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            margin: 0 3px;
         }
 
         .quantity-btn:hover {
-            background: #e74c3c;
+            background: var(--accent-color);
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .item-quantity {
             margin: 0 10px;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary-color);
         }
 
         .total-price {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
+            margin-top: 25px;
+            font-size: 20px;
+            font-weight: 800;
             text-align: left;
+            color: var(--primary-color);
+            border-top: 2px solid var(--secondary-color);
+            padding-top: 15px;
         }
-
-        /* دکمه ثبت خرید حذف شده است */
         
+        /* Checkout Button - REMOVED */
+        /* .checkout-btn { ... } */
+
+        /* Footer */
         footer {
             text-align: center;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 12px;
-            position: fixed;
+            background: var(--header-footer-bg-transparent);
+            padding: 15px;
+            position: relative; /* Changed to relative so it's not always fixed at bottom */
             width: 100%;
-            bottom: 0;
-            color: #3b2f2f;
-            backdrop-filter: blur(8px);
+            color: var(--text-color-dark);
+            backdrop-filter: blur(10px);
             z-index: 5;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            font-size: 15px;
+            font-weight: 400;
         }
 
+        /* Animated Coffee Beans */
         .coffee-bean {
             position: absolute;
-            width: 12px;
-            height: 8px;
             background: #4b2e2e;
             border-radius: 50%;
             animation: floatBean linear infinite;
             pointer-events: none;
-            opacity: 0.5;
-            z-index: 2;
+            opacity: 0.6;
+            z-index: 0; /* Behind other content */
+            filter: blur(0.5px);
         }
 
         @keyframes floatBean {
-            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.5; }
-            50% { transform: translateY(-30px) translateX(15px) rotate(180deg); opacity: 0.8; }
-            100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.5; }
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+            25% { transform: translateY(-20vh) translateX(5vw) rotate(90deg); opacity: 0.7; }
+            50% { transform: translateY(-40vh) translateX(-5vw) rotate(180deg); opacity: 0.8; }
+            75% { transform: translateY(-60vh) translateX(5vw) rotate(270deg); opacity: 0.7; }
+            100% { transform: translateY(-80vh) translateX(0) rotate(360deg); opacity: 0.6; }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Keyframe Animations */
+        @keyframes cardEntrance {
+            0% { opacity: 0; transform: rotateY(90deg) scale(0.8); }
+            100% { opacity: 1; transform: rotateY(0deg) scale(1); }
         }
 
+        @keyframes itemFadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes imgScaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .menu {
-                padding: 20px;
-                gap: 20px;
-            }
-
-            .card {
-                padding: 15px;
-            }
-
             header {
-                font-size: 20px;
+                font-size: 22px;
+                padding: 10px 20px;
             }
-
+            .cart-icon {
+                font-size: 28px;
+            }
+            .cart-count {
+                top: -6px;
+                right: -8px;
+                font-size: 13px;
+                padding: 2px 7px;
+                min-width: 18px;
+            }
+            .menu {
+                padding: 25px;
+                gap: 25px;
+                grid-template-columns: 1fr; /* Stack cards vertically on small screens */
+            }
+            .card {
+                padding: 20px;
+            }
+            .card h3 {
+                font-size: 22px;
+            }
+            .item-name {
+                font-size: 17px;
+            }
+            .price {
+                font-size: 15px;
+                padding: 7px 12px;
+            }
+            .item-modal-content {
+                padding: 25px;
+                width: 95%;
+            }
+            .item-modal-content h3 {
+                font-size: 26px;
+            }
+            .item-modal-content p {
+                font-size: 17px;
+            }
+            .modal-add-btn {
+                padding: 12px 25px;
+                font-size: 18px;
+            }
             .cart-modal {
                 width: 90%;
                 right: 5%;
+                top: 70px;
+                padding: 20px;
+            }
+            .cart-modal h3 {
+                font-size: 20px;
+            }
+            .cart-item {
+                font-size: 15px;
+            }
+            .quantity-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 16px;
+            }
+            .item-quantity {
+                font-size: 16px;
+            }
+            .total-price {
+                font-size: 18px;
+            }
+            footer {
+                padding: 10px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                font-size: 18px;
+                padding: 8px 15px;
+            }
+            .cart-icon {
+                font-size: 24px;
+            }
+            .cart-count {
+                top: -5px;
+                right: -7px;
+                font-size: 12px;
+                padding: 1px 6px;
+                min-width: 16px;
+            }
+            .menu {
+                padding: 15px;
+                gap: 15px;
+            }
+            .card {
+                padding: 15px;
+            }
+            .card h3 {
+                font-size: 20px;
+                margin-bottom: 15px;
+                padding-bottom: 8px;
+            }
+            .item {
+                margin: 10px 0;
+                padding: 6px 10px;
+            }
+            .item-name {
+                font-size: 16px;
+            }
+            .price {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+            .item-modal-content {
+                padding: 20px;
+            }
+            .close-btn {
+                font-size: 28px;
+                top: 10px;
+                left: 15px;
+            }
+            .item-modal-content img {
+                max-height: 200px;
+                margin-bottom: 15px;
+            }
+            .item-modal-content h3 {
+                font-size: 22px;
+            }
+            .item-modal-content p {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+            .modal-add-btn {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+            .cart-modal {
+                width: 95%;
+                right: 2.5%;
                 top: 60px;
+                padding: 15px;
+            }
+            .cart-modal h3 {
+                font-size: 18px;
+                padding-bottom: 8px;
+                margin-bottom: 15px;
+            }
+            .cart-item {
+                font-size: 14px;
+                margin: 8px 0;
+                padding-bottom: 8px;
+            }
+            .quantity-btn {
+                width: 25px;
+                height: 25px;
+                font-size: 14px;
+            }
+            .item-quantity {
+                font-size: 14px;
+            }
+            .total-price {
+                font-size: 16px;
+                margin-top: 15px;
+                padding-top: 10px;
+            }
+            footer {
+                padding: 8px;
+                font-size: 12px;
             }
         }
     </style>
 </head>
 <body>
-
     <header>
         <span>کافه دلنشین ☕</span>
-        <div class="cart-icon" onclick="toggleCart()">
+        <div class="cart-icon" onclick="toggleCart()" id="cart-icon">
             🛒
             <span class="cart-count" id="cart-count">0</span>
         </div>
@@ -410,47 +727,56 @@
     <footer>© ۲۰۲۵ کافه دلنشین - همه حقوق محفوظ است.</footer>
     
     <script>
-        // JavaScript for a more interactive menu
         const menuData = {
             'نوشیدنی های گرم': [
                 { name: 'اسپرسو', price: 35000, desc: 'شات کوچکی از قهوه غلیظ و معطر، پایه اصلی تمام قهوه‌های ما.', image: 'https://images.unsplash.com/photo-1579992323868-b7c4d57c21c7?auto=format&fit=crop&w=400&q=80' },
                 { name: 'لته', price: 45000, desc: 'ترکیبی از شیر داغ، فوم شیر و یک شات اسپرسو، با نقشی زیبا روی آن.', image: 'https://images.unsplash.com/photo-1525164016739-9d0426f0750a?auto=format&fit=crop&w=400&q=80' },
-                { name: 'قهوه ترک', price: 30000, desc: 'قهوه‌ای سنتی و غلیظ، با عطری دلپذیر و طعمی ماندگار.', image: 'https://images.unsplash.com/photo-1502447938367-96a1a1c4b574?auto=format&fit=crop&w=400&q=80' }
+                { name: 'قهوه ترک', price: 30000, desc: 'قهوه‌ای سنتی و غلیظ، با عطری دلپذیر و طعمی ماندگار.', image: 'https://images.unsplash.com/photo-1502447938367-96a1a1c4b574?auto=format&fit=crop&w=400&q=80' },
+                { name: 'کاپوچینو', price: 42000, desc: 'ترکیبی کلاسیک از اسپرسو، شیر بخارپز و فوم شیر غلیظ.', image: 'https://images.unsplash.com/photo-1517701764121-6c2e28325a28?auto=format&fit=crop&w=400&q=80' }
             ],
             'نوشیدنی های سرد': [
                 { name: 'آیس لاته', price: 50000, desc: 'لته خنک با یخ، نوشیدنی عالی برای روزهای گرم.', image: 'https://images.unsplash.com/photo-1541315609328-9173079f8c6b?auto=format&fit=crop&w=400&q=80' },
                 { name: 'موهیتو', price: 40000, desc: 'ترکیبی از نعناع تازه، لیمو، شکر و سودا، فوق‌العاده باطراوت.', image: 'https://images.unsplash.com/photo-1549488344-933e140d348a?auto=format&fit=crop&w=400&q=80' },
-                { name: 'آیس تی', price: 35000, desc: 'چای سرد با طعم لیمو و هلو، خنک و گوارا.', image: 'https://images.unsplash.com/photo-1563840742517-5e1654160408?auto=format&fit=crop&w=400&q=80' }
+                { name: 'آیس تی', price: 35000, desc: 'چای سرد با طعم لیمو و هلو، خنک و گوارا.', image: 'https://images.unsplash.com/photo-1563840742517-5e1654160408?auto=format&fit=crop&w=400&q=80' },
+                { name: 'لیموناد', price: 38000, desc: 'نوشیدنی کلاسیک لیمو، خنک و ترش و شیرین.', image: 'https://images.unsplash.com/photo-1554629947-334ff61d84dc?auto=format&fit=crop&w=400&q=80' }
             ],
             'کیک و دسر': [
                 { name: 'کیک شکلاتی', price: 55000, desc: 'کیکی غنی و شکلاتی با گاناش، یک انتخاب عالی برای عاشقان شکلات.', image: 'https://images.unsplash.com/photo-1577908906567-980753d0e9a5?auto=format&fit=crop&w=400&q=80' },
                 { name: 'چیزکیک نیویورکی', price: 60000, desc: 'چیزکیکی کلاسیک با بافتی نرم و خامه‌ای، رویه‌ای طلایی و طعمی فراموش‌نشدنی.', image: 'https://images.unsplash.com/photo-1565551322285-d6023253b070?auto=format&fit=crop&w=400&q=80' },
-                { name: 'وافل بستنی', price: 70000, desc: 'وافل تازه و ترد با یک اسکوپ بستنی و سس شکلات.', image: 'https://images.unsplash.com/photo-1587630713500-619f5630d705?auto=format&fit=crop&w=400&q=80' }
+                { name: 'وافل بستنی', price: 70000, desc: 'وافل تازه و ترد با یک اسکوپ بستنی و سس شکلات.', image: 'https://images.unsplash.com/photo-1587630713500-619f5630d705?auto=format&fit=crop&w=400&q=80' },
+                { name: 'تیرامیسو', price: 62000, desc: 'دسر ایتالیایی محبوب با لایه‌های قهوه، پنیر ماسکارپونه و بیسکوئیت لیدی فینگر.', image: 'https://images.unsplash.com/photo-1537233324151-6c2e28325a28?auto=format&fit=crop&w=400&q=80' }
             ]
         };
 
         let cart = [];
+        const cartIcon = document.getElementById('cart-icon');
 
         function renderMenu() {
             const menuContainer = document.getElementById('menu-container');
-            menuContainer.innerHTML = '';
+            menuContainer.innerHTML = ''; // Clear previous content
 
+            let cardDelay = 0;
             for (const category in menuData) {
                 const card = document.createElement('div');
                 card.classList.add('card');
+                card.style.animationDelay = `${cardDelay * 0.1}s`; // Staggered card animation
                 card.innerHTML = `<h3>${category}</h3>`;
 
+                let itemDelay = 0;
                 menuData[category].forEach(item => {
                     const itemDiv = document.createElement('div');
                     itemDiv.classList.add('item');
                     itemDiv.setAttribute('data-item-name', item.name);
+                    itemDiv.style.animationDelay = `${cardDelay * 0.1 + itemDelay * 0.05}s`; // Staggered item animation
                     itemDiv.innerHTML = `
                         <span class="item-name">${item.name}</span>
                         <span class="price">${item.price.toLocaleString()} تومان</span>
                     `;
                     card.appendChild(itemDiv);
+                    itemDelay++;
                 });
                 menuContainer.appendChild(card);
+                cardDelay++;
             }
         }
 
@@ -466,12 +792,11 @@
             }
             updateCartDisplay();
 
-            // Add visual feedback
-            const cartIcon = document.querySelector('.cart-icon');
+            // Add visual feedback to cart icon
             cartIcon.classList.add('added-item');
             setTimeout(() => {
                 cartIcon.classList.remove('added-item');
-            }, 600);
+            }, 800);
         }
 
         function showItemDetails(event) {
@@ -544,16 +869,20 @@
             modal.classList.toggle('open');
         }
 
-        // تابع checkout به طور کامل حذف شده است
+        // Checkout function is intentionally removed as per request
+        // function checkout() { /* ... */ }
 
         function createCoffeeBeans() {
-            for(let i = 0; i < 30; i++){
+            const numBeans = 40; // More beans for a richer effect
+            for(let i = 0; i < numBeans; i++){
                 let bean = document.createElement('div');
                 bean.classList.add('coffee-bean');
+                bean.style.width = `${8 + Math.random() * 8}px`; // Varying sizes
+                bean.style.height = `${6 + Math.random() * 6}px`; // Varying sizes
                 bean.style.top = Math.random() * 100 + '%';
                 bean.style.left = Math.random() * 100 + '%';
-                bean.style.animationDuration = (2 + Math.random() * 4) + 's';
-                bean.style.animationDelay = (Math.random() * 2) + 's';
+                bean.style.animationDuration = (8 + Math.random() * 12) + 's'; // Slower, varying speeds
+                bean.style.animationDelay = (Math.random() * 5) + 's'; // Staggered start times
                 document.body.appendChild(bean);
             }
         }
@@ -566,7 +895,3 @@
     </script>
 </body>
 </html>
-
-
-
-
