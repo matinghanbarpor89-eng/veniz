@@ -359,7 +359,7 @@
 
         /* Cart Modal Styles */
         .cart-modal {
-         position: fixed;
+            position: fixed;
             top: 90px;
             right: 25px;
             width: 350px;
@@ -379,31 +379,22 @@
             flex-direction: column;
         }
 
-
-        .cart-modal::-webkit-scrollbar {
-            width: 8px;
+        .cart-modal.open {
+            transform: translateX(0);
+            display: flex;
         }
-
-        .cart-modal::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .cart-modal::-webkit-scrollbar-thumb {
-            background-color: var(--secondary-color);
-            border-radius: 10px;
-            border: 2px solid var(--card-bg-transparent);
+        
+        #cart-items {
+            flex-grow: 1; /* Allows this section to fill available space */
+            max-height: 40vh; /* Set a max height for the items container */
+            overflow-y: auto; /* Enable vertical scroll */
+            margin-bottom: 15px;
         }
         
         #empty-cart {
             text-align: center;
             font-size: 16px;
             color: #777;
-        }
-
-        .cart-modal.open {
-            display: block;
-            transform: translateX(0);
         }
 
         .cart-modal h3 {
@@ -994,4 +985,3 @@
     </script>
 </body>
 </html>
-
