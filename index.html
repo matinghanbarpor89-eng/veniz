@@ -359,8 +359,7 @@
 
         /* Cart Modal Styles */
         .cart-modal {
-            display: none;
-            position: fixed;
+         position: fixed;
             top: 90px;
             right: 25px;
             width: 350px;
@@ -373,10 +372,13 @@
             backdrop-filter: blur(10px);
             transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
             transform: translateX(120%);
-            max-height: 80vh;
-            overflow-y: auto;
+            display: none; /* Hide by default and show with .open class */
             border: 2px solid var(--secondary-color);
+            /* Add this to allow modal to be flexible */
+            display: flex;
+            flex-direction: column;
         }
+
 
         .cart-modal::-webkit-scrollbar {
             width: 8px;
@@ -992,3 +994,4 @@
     </script>
 </body>
 </html>
+
