@@ -24,10 +24,10 @@
         :root {
             --primary-color: #8B4513; /* SaddleBrown */
             --secondary-color: #D2691E; /* Chocolate */
-            --accent-color: #FF7F50;   /* Coral */
+            --accent-color: #FF7F50;    /* Coral */
             --text-color-dark: #3b2f2f;
             --text-color-light: #fff;
-            --bg-light: #fff8f0;       /* Off-white/Cream */
+            --bg-light: #fff8f0;        /* Off-white/Cream */
             --bg-dark-transparent: rgba(0, 0, 0, 0.6);
             --card-bg-transparent: rgba(255, 248, 240, 0.95);
             --header-footer-bg-transparent: rgba(255, 255, 255, 0.9);
@@ -807,16 +807,19 @@
         const itemModal = document.getElementById('item-modal');
         const totalPriceDiv = document.getElementById("total-price");
         const cartCountSpan = document.getElementById("cart-count");
+        const closeBtn = document.querySelector(".close-btn");
+        const cartModal = document.getElementById("cart-modal");
 
         function renderMenu(query = '') {
             menuContainer.innerHTML = '';
             emptySearchMessage.style.display = 'none';
 
+            const normalizedQuery = query.trim().toLowerCase();
             let hasResults = false;
             let cardDelay = 0;
             for (const category in menuData) {
-                const filteredItems = menuData[category].filter(item => 
-                    item.name.includes(query) || item.desc.includes(query)
+                const filteredItems = menuData[category].filter(item =>
+                    item.name.includes(normalizedQuery) || item.desc.includes(normalizedQuery)
                 );
 
                 if (filteredItems.length > 0) {
@@ -906,9 +909,9 @@
                             <span class="cart-item-price">${item.price.toLocaleString()} تومان</span>
                         </div>
                         <div class="item-controls">
-                            <button class="quantity-btn" data-index="${index}" data-change="1">+</button>
-                            <span class="item-quantity">${item.quantity}</span>
                             <button class="quantity-btn" data-index="${index}" data-change="-1">-</button>
+                            <span class="item-quantity">${item.quantity}</span>
+                            <button class="quantity-btn" data-index="${index}" data-change="1">+</button>
                         </div>
                     `;
                     cartItemsDiv.appendChild(cartItemEl);
@@ -935,62 +938,66 @@
             updateCartDisplay();
         }
 
-        // افزودن شنونده‌های رویداد
+        function generateCoffeeBeans() {
+            const body = document.body;
+            const numBeans = 20;
+            for (let i = 0; i < numBeans; i++) {
+                const bean = document.createElement('div');
+                bean.classList.add('coffee-bean');
+                const size = Math.random() * 8 + 4; // Beans from 4px to 12px
+                bean.style.width = `${size}px`;
+                bean.style.height = `${size * 1.5}px`;
+                bean.style.left = `${Math.random() * 100}vw`;
+                bean.style.animationDuration = `${Math.random() * 10 + 15}s`;
+                bean.style.animationDelay = `-${Math.random() * 10}s`; // Start at random points
+                bean.style.transform = `rotate(${Math.random() * 360}deg)`;
+                body.appendChild(bean);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             renderMenu();
+            generateCoffeeBeans();
 
+            // Event listener for showing item details modal
             menuContainer.addEventListener('click', (event) => {
                 showItemDetails(event);
             });
 
-            document.getElementById('modal-add-btn').addEventListener('click', (event) => {
-                const itemName = event.target.dataset.itemName;
-                addToCart(itemName);
-                closeItemDetails();
-            });
-
-            document.querySelector('.close-btn').addEventListener('click', closeItemDetails);
-
-            itemModal.addEventListener('click', (event) => {
+            // Event listener for closing item details modal
+            closeBtn.addEventListener('click', closeItemDetails);
+            window.addEventListener('click', (event) => {
                 if (event.target === itemModal) {
                     closeItemDetails();
                 }
             });
 
-            cartIcon.addEventListener('click', () => {
-                document.getElementById('cart-modal').classList.toggle('open');
+            // Event listener for adding an item from the modal to the cart
+            document.getElementById('modal-add-btn').addEventListener('click', (event) => {
+                const itemName = event.target.dataset.itemName;
+                if (itemName) {
+                    addToCart(itemName);
+                    closeItemDetails();
+                }
             });
-            
+
+            // Event listener for opening/closing the cart modal
+            cartIcon.addEventListener('click', () => {
+                cartModal.classList.toggle('open');
+            });
+
+            // Event listener for changing item quantity in the cart
             cartItemsDiv.addEventListener('click', (event) => {
                 if (event.target.classList.contains('quantity-btn')) {
                     handleQuantityChange(event);
                 }
             });
 
+            // Event listener for search input
             searchInput.addEventListener('input', (event) => {
-                const query = event.target.value.trim();
-                renderMenu(query);
+                renderMenu(event.target.value);
             });
-
-            // برای دانه‌های قهوه متحرک
-            function createFloatingBeans() {
-                const numBeans = 15;
-                for (let i = 0; i < numBeans; i++) {
-                    const bean = document.createElement('div');
-                    bean.classList.add('coffee-bean');
-                    const size = Math.random() * 20 + 10;
-                    bean.style.width = `${size}px`;
-                    bean.style.height = `${size}px`;
-                    bean.style.left = `${Math.random() * 100}vw`;
-                    bean.style.animationDuration = `${Math.random() * 10 + 5}s`;
-                    bean.style.animationDelay = `${Math.random() * 5}s`;
-                    document.body.appendChild(bean);
-                }
-            }
-
-            createFloatingBeans();
         });
     </script>
 </body>
 </html>
-
