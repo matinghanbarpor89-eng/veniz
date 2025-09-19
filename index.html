@@ -874,7 +874,6 @@
             document.getElementById("modal-image").src = item.image;
             document.getElementById("modal-description").textContent = item.desc;
             
-            const addButton = document.getElementById("modal-add-btn");
             modal.setAttribute('data-item-name', item.name);
             modal.style.display = "flex";
         }
@@ -920,68 +919,76 @@
             totalPriceDiv.textContent = `مبلغ کل: ${total.toLocaleString()} تومان`;
         }
 
-        function changeQuantity(index, change) {
-            const item = cart[index];
-            item.quantity += change;
-            if (item.quantity <= 0) {
+        function handleQuantityChange(event) {
+            const button = event.target;
+            const index = button.dataset.index;
+            const change = parseInt(button.dataset.change);
+            
+            cart[index].quantity += change;
+
+            if (cart[index].quantity <= 0) {
                 cart.splice(index, 1);
             }
             updateCartDisplay();
         }
 
-        function toggleCart() {
-            const modal = document.getElementById("cart-modal");
-            modal.classList.toggle('open');
-            // Hide item modal if cart is opened
-            closeItemDetails();
-        }
-
-        function createCoffeeBeans() {
-            const numBeans = 40; 
-            for(let i = 0; i < numBeans; i++){
-                let bean = document.createElement('div');
-                bean.classList.add('coffee-bean');
-                bean.style.width = `${8 + Math.random() * 8}px`; 
-                bean.style.height = `${6 + Math.random() * 6}px`;
-                bean.style.top = Math.random() * 100 + '%';
-                bean.style.left = Math.random() * 100 + '%';
-                bean.style.animationDuration = (8 + Math.random() * 12) + 's';
-                bean.style.animationDelay = (Math.random() * 5) + 's';
-                document.body.appendChild(bean);
-            }
-        }
-
+        // افزودن شنونده‌های رویداد
         document.addEventListener('DOMContentLoaded', () => {
             renderMenu();
-            createCoffeeBeans();
-            
-            // Centralize event listeners
-            document.getElementById('menu-container').addEventListener('click', showItemDetails);
-            document.getElementById('cart-icon').addEventListener('click', toggleCart);
-            document.querySelector('#item-modal .close-btn').addEventListener('click', closeItemDetails);
-            document.getElementById('modal-add-btn').addEventListener('click', () => {
-                const itemName = document.getElementById("item-modal").dataset.itemName;
+
+            menuContainer.addEventListener('click', (event) => {
+                showItemDetails(event);
+            });
+
+            document.getElementById('modal-add-btn').addEventListener('click', (event) => {
+                const modal = document.getElementById('item-modal');
+                const itemName = modal.dataset.itemName;
                 addToCart(itemName);
                 closeItemDetails();
             });
 
-            // Handle quantity changes in cart
-            document.getElementById('cart-items').addEventListener('click', (e) => {
-                const btn = e.target.closest('.quantity-btn');
-                if (btn) {
-                    const index = parseInt(btn.dataset.index);
-                    const change = parseInt(btn.dataset.change);
-                    changeQuantity(index, change);
+            document.querySelector('.close-btn').addEventListener('click', closeItemDetails);
+
+            window.addEventListener('click', (event) => {
+                const modal = document.getElementById("item-modal");
+                if (event.target === modal) {
+                    closeItemDetails();
                 }
             });
 
-            // Search functionality
-            searchInput.addEventListener('input', (e) => {
-                const query = e.target.value.trim();
+            cartIcon.addEventListener('click', () => {
+                document.getElementById('cart-modal').classList.toggle('open');
+            });
+            
+            cartItemsDiv.addEventListener('click', (event) => {
+                if (event.target.classList.contains('quantity-btn')) {
+                    handleQuantityChange(event);
+                }
+            });
+
+            searchInput.addEventListener('input', (event) => {
+                const query = event.target.value.trim();
                 renderMenu(query);
             });
+
+            // برای دانه‌های قهوه متحرک
+            function createFloatingBeans() {
+                const numBeans = 15;
+                for (let i = 0; i < numBeans; i++) {
+                    const bean = document.createElement('div');
+                    bean.classList.add('coffee-bean');
+                    const size = Math.random() * 20 + 10;
+                    bean.style.width = `${size}px`;
+                    bean.style.height = `${size}px`;
+                    bean.style.left = `${Math.random() * 100}vw`;
+                    bean.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                    bean.style.animationDelay = `${Math.random() * 5}s`;
+                    document.body.appendChild(bean);
+                }
+            }
+
+            createFloatingBeans();
         });
     </script>
 </body>
 </html>
-
